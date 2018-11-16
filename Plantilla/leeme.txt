@@ -1,0 +1,34 @@
+
+# Plantilla para la práctica 6. Incluye:
+
+- carpeta web, con 
+    - fuentes Bootstrap 4 bajados de https://getbootstrap.com/docs/4.1/getting-started/download/
+    - fuentes de JS bajados del CDN de Bootstrap
+    - un comienzo de api JS para interaccionar con el servidor (vtapi.js) -- USO ORIENTATIVO, EN DESARROLLO
+    - un documento index.html, que contiene la plantilla recomendada de bootstrap
+    => descomprime el 
+- leeme.txt, el fichero que estas leyendo ahora
+- reemplazame.pdf, una plantilla (vacía) para tu presentación, que deberás reemplazar por tu presentación
+  cuando la tengas lista.
+
+# Empezado con la práctica
+
+- Empieza pensando en qué quieres colocar en tu ventana
+- Seguramente quieras una barra de navegación: 
+    https://getbootstrap.com/docs/4.1/components/navbar/
+- Para el resto de componentes primero, elige cómo vas a repartir tu interfaz:
+    https://getbootstrap.com/docs/4.1/layout/overview/
+    https://getbootstrap.com/docs/4.1/layout/grid/
+    (usa valores como col-sm-4 + col-sm-8 para repartir columnas 1/3 vs 2/3, etcétera)
+- Piensa en la posibilidad de incluir listas:
+    https://getbootstrap.com/docs/4.1/components/list-group/#links-and-buttons
+- Si estás mal de espacios, puedes querer usar pestañas:
+    https://getbootstrap.com/docs/4.1/components/navs/#tabs
+- Puedes incluir min-barras de navegación para componentes concretos:
+    https://getbootstrap.com/docs/4.1/components/navs/#pills-with-dropdowns
+- Para diálogos necesarios para recabar información adicional, puedes usar 'modals'
+    https://getbootstrap.com/docs/4.1/components/modal/#vertically-centered
+
+Importante: en la Sesión 1 no se espera que añadas ningún tipo de funcionalidad. Este será el objetivo de la Sesión 2. Usa datos de ejemplo para poder presentar cómo funciona tu interfaz, y encárgate de los detalles más adelante.
+
+Para hacer distintas vistas, crea copias de index.html y modifica sus contenidos. Asegúrate de enlazarlas desde index.html para que se puedan seguir.
