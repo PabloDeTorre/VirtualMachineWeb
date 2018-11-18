@@ -60,6 +60,7 @@
     height: 20px;
     margin-right: 5px;
     margin-top: 6px;
+    cursor: pointer;
 }
 .draggableIndicator{
     float: left;
