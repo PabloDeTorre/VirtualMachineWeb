@@ -29,9 +29,11 @@
     </div>
     <div class="iconMenu">
       <div class="card">
-        <img src="./img/add.png">
-        <img src="./img/import.png" class="import" data-toggle="modal" data-target="#importPopUp">
-        <img src="./img/export.png" class="export" data-toggle="modal" data-target="#exportPopUp">
+        <img src="./img/add.png" data-toggle="tooltip" data-placement="bottom" title="Crear nueva máquina virtual [Ctrl+N]">
+        <img src="./img/import.png" class="import" data-toggle="modal" data-toggle="tooltip" data-target="#importPopUp"
+          data-placement="bottom" title="Importar máquina virtual [Ctrl+I]">
+        <img src="./img/export.png" class="export" data-toggle="modal" data-toggle="tooltip" data-target="#exportPopUp"
+          data-placement="bottom" title="Exportar máquina virtual [Ctrl+E]">
       </div>
     </div>
     <div class="mainContent">
@@ -51,9 +53,17 @@
                     VM1
                   </button>
                   <div class="actionIcons">
-                    <img src="./img/edit.png">
-                    <img src="./img/shutdown.png">
-                    <img src="./img/delete.png">
+                    <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                    <div class="dropdown"> <img src="./img/shutdown.png" class="dropdown-toggle" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip"
+                        data-placement="bottom" title="Apagar/Reiniciar/Suspender">
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Suspender</a>
+                        <a class="dropdown-item" href="#">Reiniciar</a>
+                        <a class="dropdown-item" href="#">Apagar</a>
+                      </div>
+                    </div>
+                    <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                   </div>
                 </h5>
               </div>
@@ -97,9 +107,17 @@
                     VM2
                   </button>
                   <div class="actionIcons">
-                    <img src="./img/edit.png">
-                    <img src="./img/shutdown.png">
-                    <img src="./img/delete.png">
+                    <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                    <div class="dropdown">
+                      <img src="./img/shutdown.png" class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" data-toggle="tooltip" data-placement="bottom" title="Apagar/Reiniciar/Suspender">
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Suspender</a>
+                        <a class="dropdown-item" href="#">Reiniciar</a>
+                        <a class="dropdown-item" href="#">Apagar</a>
+                      </div>
+                    </div>
+                    <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                   </div>
                 </h5>
               </div>
@@ -143,9 +161,17 @@
                     VM3
                   </button>
                   <div class="actionIcons">
-                    <img src="./img/edit.png">
-                    <img src="./img/shutdown.png">
-                    <img src="./img/delete.png">
+                    <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                    <div class="dropdown"> <img src="./img/shutdown.png" class="dropdown-toggle" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip"
+                        data-placement="bottom" title="Apagar/Reiniciar/Suspender">
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Suspender</a>
+                        <a class="dropdown-item" href="#">Reiniciar</a>
+                        <a class="dropdown-item" href="#">Apagar</a>
+                      </div>
+                    </div>
+                    <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                   </div>
                 </h5>
               </div>
@@ -189,9 +215,17 @@
                     VM4
                   </button>
                   <div class="actionIcons">
-                    <img src="./img/edit.png">
-                    <img src="./img/shutdown.png">
-                    <img src="./img/delete.png">
+                    <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                    <div class="dropdown"> <img src="./img/shutdown.png" class="dropdown-toggle" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip"
+                        data-placement="bottom" title="Apagar/Reiniciar/Suspender">
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Suspender</a>
+                        <a class="dropdown-item" href="#">Reiniciar</a>
+                        <a class="dropdown-item" href="#">Apagar</a>
+                      </div>
+                    </div>
+                    <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                   </div>
                 </h5>
               </div>
@@ -235,9 +269,17 @@
                     VM5
                   </button>
                   <div class="actionIcons">
-                    <img src="./img/edit.png">
-                    <img src="./img/shutdown.png">
-                    <img src="./img/delete.png">
+                    <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                    <div class="dropdown"> <img src="./img/shutdown.png" class="dropdown-toggle" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip"
+                        data-placement="bottom" title="Apagar/Reiniciar/Suspender">
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
+                        <a class="dropdown-item" href="#">Suspender</a>
+                        <a class="dropdown-item" href="#">Reiniciar</a> 
+                        <a class="dropdown-item" href="#">Apagar</a>
+                      </div>
+                    </div>
+                    <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                   </div>
                 </h5>
               </div>
@@ -282,9 +324,17 @@
                     VM11
                   </button>
                   <div class="actionIcons">
-                    <img src="./img/edit.png">
-                    <img src="./img/shutdown.png">
-                    <img src="./img/delete.png">
+                    <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                    <div class="dropdown"> <img src="./img/shutdown.png" class="dropdown-toggle" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip"
+                        data-placement="bottom" title="Apagar/Reiniciar/Suspender">
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
+                        <a class="dropdown-item" href="#">Suspender</a>
+                        <a class="dropdown-item" href="#">Reiniciar</a> 
+                        <a class="dropdown-item" href="#">Apagar</a>
+                      </div>
+                    </div>
+                    <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                   </div>
                 </h5>
               </div>
@@ -341,9 +391,9 @@
                     Grupo 1
                   </button>
                   <div class="actionIcons">
-                    <img src="./img/edit.png">
+                    <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">
                     <img src="./img/addToGroup.png">
-                    <img src="./img/delete.png">
+                    <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                   </div>
                 </h5>
               </div>
@@ -358,7 +408,7 @@
                           VM4
                         </button>
                         <div class="actionIcons">
-                          <img src="./img/quit.png">
+                          <img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Sacar del grupo">
                         </div>
                       </h5>
                     </div>
@@ -376,9 +426,9 @@
                     Grupo 2
                   </button>
                   <div class="actionIcons">
-                    <img src="./img/edit.png">
+                    <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">
                     <img src="./img/addToGroup.png">
-                    <img src="./img/delete.png">
+                    <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                   </div>
                 </h5>
               </div>
@@ -393,7 +443,7 @@
                           VM1
                         </button>
                         <div class="actionIcons">
-                          <img src="./img/quit.png">
+                          <img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Sacar del grupo">
                         </div>
                       </h5>
                     </div>
@@ -407,7 +457,7 @@
                           VM3
                         </button>
                         <div class="actionIcons">
-                          <img src="./img/quit.png">
+                          <img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Sacar del grupo">
                         </div>
                       </h5>
                     </div>
@@ -426,9 +476,9 @@
                     Grupo 3
                   </button>
                   <div class="actionIcons">
-                    <img src="./img/edit.png">
+                    <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">
                     <img src="./img/addToGroup.png">
-                    <img src="./img/delete.png">
+                    <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                   </div>
                 </h5>
               </div>
@@ -443,7 +493,7 @@
                           VM1
                         </button>
                         <div class="actionIcons">
-                          <img src="./img/quit.png">
+                          <img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Sacar del grupo">
                         </div>
                       </h5>
                     </div>
@@ -457,7 +507,7 @@
                           VM3
                         </button>
                         <div class="actionIcons">
-                          <img src="./img/quit.png">
+                          <img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Sacar del grupo">
                         </div>
                       </h5>
                     </div>
@@ -471,7 +521,7 @@
                           VM5
                         </button>
                         <div class="actionIcons">
-                          <img src="./img/quit.png">
+                          <img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Sacar del grupo">
                         </div>
                       </h5>
                     </div>
@@ -490,9 +540,9 @@
                     Grupo 4
                   </button>
                   <div class="actionIcons">
-                    <img src="./img/edit.png">
+                    <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">
                     <img src="./img/addToGroup.png">
-                    <img src="./img/delete.png">
+                    <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                   </div>
                 </h5>
               </div>
@@ -507,7 +557,7 @@
                           VM2
                         </button>
                         <div class="actionIcons">
-                          <img src="./img/quit.png">
+                          <img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Sacar del grupo">
                         </div>
                       </h5>
                     </div>
@@ -521,7 +571,7 @@
                           VM4
                         </button>
                         <div class="actionIcons">
-                          <img src="./img/quit.png">
+                          <img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Sacar del grupo">
                         </div>
                       </h5>
                     </div>
@@ -535,7 +585,7 @@
                           VM5
                         </button>
                         <div class="actionIcons">
-                          <img src="./img/quit.png">
+                          <img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Sacar del grupo">
                         </div>
                       </h5>
                     </div>
@@ -554,9 +604,9 @@
                     Grupo 5
                   </button>
                   <div class="actionIcons">
-                    <img src="./img/edit.png">
+                    <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">
                     <img src="./img/addToGroup.png">
-                    <img src="./img/delete.png">
+                    <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                   </div>
                 </h5>
               </div>
@@ -571,7 +621,7 @@
                           VM3
                         </button>
                         <div class="actionIcons">
-                          <img src="./img/quit.png">
+                          <img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Sacar del grupo">
                         </div>
                       </h5>
                     </div>
@@ -585,7 +635,7 @@
                           VM5
                         </button>
                         <div class="actionIcons">
-                          <img src="./img/quit.png">
+                          <img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Sacar del grupo">
                         </div>
                       </h5>
                     </div>
@@ -599,7 +649,7 @@
                           VM11
                         </button>
                         <div class="actionIcons">
-                          <img src="./img/quit.png">
+                          <img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Sacar del grupo">
                         </div>
                       </h5>
                     </div>

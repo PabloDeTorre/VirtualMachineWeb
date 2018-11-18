@@ -62,6 +62,9 @@
     margin-top: 6px;
     cursor: pointer;
 }
+.actionIcons .dropdown{
+    display: inline;
+}
 .draggableIndicator{
     float: left;
     width: 10px;
