@@ -9,6 +9,7 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/ourcss.css">
+  <link rel="stylesheet" href="css/modal.css">
 
   <title>Virtual Machine Web</title>
 </head>
@@ -29,8 +30,8 @@
     <div class="iconMenu">
       <div class="card">
         <img src="./img/add.png">
-        <img src="./img/import.png" class="import">
-        <img src="./img/export.png" class="export">
+        <img src="./img/import.png" class="import" data-toggle="modal" data-target="#importPopUp">
+        <img src="./img/export.png" class="export" data-toggle="modal" data-target="#exportPopUp">
       </div>
     </div>
     <div class="mainContent">
@@ -367,260 +368,331 @@
               </div>
             </div>
             <div class="card" draggable="true">
-                <div class="card-header" id="headingGroup2">
-                  <span class="draggableIndicator">.</span>
-                  <h5 class="mb-0">
-  
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#group2" aria-controls="group2">
-                      Grupo 2
-                    </button>
-                    <div class="actionIcons">
-                      <img src="./img/edit.png">
-                      <img src="./img/addToGroup.png">
-                      <img src="./img/delete.png">
-                    </div>
-                  </h5>
-                </div>
-  
-                <div id="group2" class="collapse" aria-labelledby="headingGroup2" data-parent="#accordionExample">
-                  <div class="card-body">
-                      <div class="card">
-                          <div class="card-header" id="headingMachine4">
-                            <h5 class="mb-0">
-                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine1"
-                                aria-controls="machine1">
-                                VM1
-                              </button>
-                              <div class="actionIcons">
-                                <img src="./img/quit.png">
-                              </div>
-                            </h5>
-                          </div>
-      
-                        </div>
-                    <div class="card">
-                      <div class="card-header" id="headingMachine4">
-                        <h5 class="mb-0">
-                          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine3"
-                            aria-controls="machine3">
-                            VM3
-                          </button>
-                          <div class="actionIcons">
-                            <img src="./img/quit.png">
-                          </div>
-                        </h5>
-                      </div>
-  
-                    </div>
-                    
+              <div class="card-header" id="headingGroup2">
+                <span class="draggableIndicator">.</span>
+                <h5 class="mb-0">
+
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#group2" aria-controls="group2">
+                    Grupo 2
+                  </button>
+                  <div class="actionIcons">
+                    <img src="./img/edit.png">
+                    <img src="./img/addToGroup.png">
+                    <img src="./img/delete.png">
                   </div>
-                </div>
+                </h5>
               </div>
-              <div class="card" draggable="true">
-                  <div class="card-header" id="headingGroup3">
-                    <span class="draggableIndicator">.</span>
-                    <h5 class="mb-0">
-    
-                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#group3" aria-controls="group3">
-                        Grupo 3
-                      </button>
-                      <div class="actionIcons">
-                        <img src="./img/edit.png">
-                        <img src="./img/addToGroup.png">
-                        <img src="./img/delete.png">
-                      </div>
-                    </h5>
-                  </div>
-    
-                  <div id="group3" class="collapse" aria-labelledby="headingGroup3" data-parent="#accordionExample">
-                    <div class="card-body">
-                        <div class="card">
-                            <div class="card-header" id="headingMachine4">
-                              <h5 class="mb-0">
-                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine1"
-                                  aria-controls="machine1">
-                                  VM1
-                                </button>
-                                <div class="actionIcons">
-                                  <img src="./img/quit.png">
-                                </div>
-                              </h5>
-                            </div>
-        
-                          </div>
-                      <div class="card">
-                        <div class="card-header" id="headingMachine4">
-                          <h5 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine3"
-                              aria-controls="machine3">
-                              VM3
-                            </button>
-                            <div class="actionIcons">
-                              <img src="./img/quit.png">
-                            </div>
-                          </h5>
-                        </div>
-    
-                      </div>
-                      <div class="card">
-                          <div class="card-header" id="headingMachine4">
-                            <h5 class="mb-0">
-                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine5"
-                                aria-controls="machine5">
-                                VM5
-                              </button>
-                              <div class="actionIcons">
-                                <img src="./img/quit.png">
-                              </div>
-                            </h5>
-                          </div>
-      
-                        </div>
-                      
-                    </div>
-                  </div>
-                </div>
-                <div class="card" draggable="true">
-                    <div class="card-header" id="headingGroup4">
-                      <span class="draggableIndicator">.</span>
+
+              <div id="group2" class="collapse" aria-labelledby="headingGroup2" data-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="card">
+                    <div class="card-header" id="headingMachine4">
                       <h5 class="mb-0">
-      
-                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#group4" aria-controls="group4">
-                          Grupo 4
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine1"
+                          aria-controls="machine1">
+                          VM1
                         </button>
                         <div class="actionIcons">
-                          <img src="./img/edit.png">
-                          <img src="./img/addToGroup.png">
-                          <img src="./img/delete.png">
+                          <img src="./img/quit.png">
                         </div>
                       </h5>
                     </div>
-      
-                    <div id="group4" class="collapse" aria-labelledby="headingGroup4" data-parent="#accordionExample">
-                      <div class="card-body">
-                          <div class="card">
-                              <div class="card-header" id="headingMachine4">
-                                <h5 class="mb-0">
-                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine2"
-                                    aria-controls="machine2">
-                                    VM2
-                                  </button>
-                                  <div class="actionIcons">
-                                    <img src="./img/quit.png">
-                                  </div>
-                                </h5>
-                              </div>
-          
-                            </div>
-                        <div class="card">
-                          <div class="card-header" id="headingMachine4">
-                            <h5 class="mb-0">
-                              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine4"
-                                aria-controls="machine4">
-                                VM4
-                              </button>
-                              <div class="actionIcons">
-                                <img src="./img/quit.png">
-                              </div>
-                            </h5>
-                          </div>
-      
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingMachine4">
-                              <h5 class="mb-0">
-                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine5"
-                                  aria-controls="machine5">
-                                  VM5
-                                </button>
-                                <div class="actionIcons">
-                                  <img src="./img/quit.png">
-                                </div>
-                              </h5>
-                            </div>
-        
-                          </div>
-                        
-                      </div>
-                    </div>
+
                   </div>
-                  <div class="card" draggable="true">
-                      <div class="card-header" id="headingGroup5">
-                        <span class="draggableIndicator">.</span>
-                        <h5 class="mb-0">
-        
-                          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#group5" aria-controls="group5">
-                            Grupo 5
-                          </button>
-                          <div class="actionIcons">
-                            <img src="./img/edit.png">
-                            <img src="./img/addToGroup.png">
-                            <img src="./img/delete.png">
-                          </div>
-                        </h5>
-                      </div>
-        
-                      <div id="group5" class="collapse" aria-labelledby="headingGroup5" data-parent="#accordionExample">
-                        <div class="card-body">
-                            <div class="card">
-                                <div class="card-header" id="headingMachine4">
-                                  <h5 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine3"
-                                      aria-controls="machine3">
-                                      VM3
-                                    </button>
-                                    <div class="actionIcons">
-                                      <img src="./img/quit.png">
-                                    </div>
-                                  </h5>
-                                </div>
-            
-                              </div>
-                          <div class="card">
-                            <div class="card-header" id="headingMachine4">
-                              <h5 class="mb-0">
-                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine5"
-                                  aria-controls="machine5">
-                                  VM5
-                                </button>
-                                <div class="actionIcons">
-                                  <img src="./img/quit.png">
-                                </div>
-                              </h5>
-                            </div>
-        
-                          </div>
-                          <div class="card">
-                              <div class="card-header" id="headingMachine4">
-                                <h5 class="mb-0">
-                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine11"
-                                    aria-controls="machine11">
-                                    VM11
-                                  </button>
-                                  <div class="actionIcons">
-                                    <img src="./img/quit.png">
-                                  </div>
-                                </h5>
-                              </div>
-          
-                            </div>
-                          
+                  <div class="card">
+                    <div class="card-header" id="headingMachine4">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine3"
+                          aria-controls="machine3">
+                          VM3
+                        </button>
+                        <div class="actionIcons">
+                          <img src="./img/quit.png">
                         </div>
-                      </div>
+                      </h5>
                     </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="card" draggable="true">
+              <div class="card-header" id="headingGroup3">
+                <span class="draggableIndicator">.</span>
+                <h5 class="mb-0">
+
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#group3" aria-controls="group3">
+                    Grupo 3
+                  </button>
+                  <div class="actionIcons">
+                    <img src="./img/edit.png">
+                    <img src="./img/addToGroup.png">
+                    <img src="./img/delete.png">
+                  </div>
+                </h5>
+              </div>
+
+              <div id="group3" class="collapse" aria-labelledby="headingGroup3" data-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="card">
+                    <div class="card-header" id="headingMachine4">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine1"
+                          aria-controls="machine1">
+                          VM1
+                        </button>
+                        <div class="actionIcons">
+                          <img src="./img/quit.png">
+                        </div>
+                      </h5>
+                    </div>
+
+                  </div>
+                  <div class="card">
+                    <div class="card-header" id="headingMachine4">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine3"
+                          aria-controls="machine3">
+                          VM3
+                        </button>
+                        <div class="actionIcons">
+                          <img src="./img/quit.png">
+                        </div>
+                      </h5>
+                    </div>
+
+                  </div>
+                  <div class="card">
+                    <div class="card-header" id="headingMachine4">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine5"
+                          aria-controls="machine5">
+                          VM5
+                        </button>
+                        <div class="actionIcons">
+                          <img src="./img/quit.png">
+                        </div>
+                      </h5>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="card" draggable="true">
+              <div class="card-header" id="headingGroup4">
+                <span class="draggableIndicator">.</span>
+                <h5 class="mb-0">
+
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#group4" aria-controls="group4">
+                    Grupo 4
+                  </button>
+                  <div class="actionIcons">
+                    <img src="./img/edit.png">
+                    <img src="./img/addToGroup.png">
+                    <img src="./img/delete.png">
+                  </div>
+                </h5>
+              </div>
+
+              <div id="group4" class="collapse" aria-labelledby="headingGroup4" data-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="card">
+                    <div class="card-header" id="headingMachine4">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine2"
+                          aria-controls="machine2">
+                          VM2
+                        </button>
+                        <div class="actionIcons">
+                          <img src="./img/quit.png">
+                        </div>
+                      </h5>
+                    </div>
+
+                  </div>
+                  <div class="card">
+                    <div class="card-header" id="headingMachine4">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine4"
+                          aria-controls="machine4">
+                          VM4
+                        </button>
+                        <div class="actionIcons">
+                          <img src="./img/quit.png">
+                        </div>
+                      </h5>
+                    </div>
+
+                  </div>
+                  <div class="card">
+                    <div class="card-header" id="headingMachine4">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine5"
+                          aria-controls="machine5">
+                          VM5
+                        </button>
+                        <div class="actionIcons">
+                          <img src="./img/quit.png">
+                        </div>
+                      </h5>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <div class="card" draggable="true">
+              <div class="card-header" id="headingGroup5">
+                <span class="draggableIndicator">.</span>
+                <h5 class="mb-0">
+
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#group5" aria-controls="group5">
+                    Grupo 5
+                  </button>
+                  <div class="actionIcons">
+                    <img src="./img/edit.png">
+                    <img src="./img/addToGroup.png">
+                    <img src="./img/delete.png">
+                  </div>
+                </h5>
+              </div>
+
+              <div id="group5" class="collapse" aria-labelledby="headingGroup5" data-parent="#accordionExample">
+                <div class="card-body">
+                  <div class="card">
+                    <div class="card-header" id="headingMachine4">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine3"
+                          aria-controls="machine3">
+                          VM3
+                        </button>
+                        <div class="actionIcons">
+                          <img src="./img/quit.png">
+                        </div>
+                      </h5>
+                    </div>
+
+                  </div>
+                  <div class="card">
+                    <div class="card-header" id="headingMachine4">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine5"
+                          aria-controls="machine5">
+                          VM5
+                        </button>
+                        <div class="actionIcons">
+                          <img src="./img/quit.png">
+                        </div>
+                      </h5>
+                    </div>
+
+                  </div>
+                  <div class="card">
+                    <div class="card-header" id="headingMachine4">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine11"
+                          aria-controls="machine11">
+                          VM11
+                        </button>
+                        <div class="actionIcons">
+                          <img src="./img/quit.png">
+                        </div>
+                      </h5>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
 
           </div>
 
 
         </div>
-        
+
       </div>
     </div>
-  </div>
 
-  </div>
+    <!-- Modals -->
+    <div class="modal fade" id="importPopUp" tabindex="-1" role="dialog" aria-labelledby="importPopUpTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="importPopUpTitle">Importar</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal">
+              <div class="form-group nameAndInput">
+                <label for="inputName">Nombre</label>
+                <div>
+                  <input type="text" class="form-control" id="inputName" placeholder="Nombre de la máquina virtual">
+                </div>
+              </div>
+              <div class="form-group nameAndInput">
+                <label for="inputPath">Ruta</label>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="customFile">
+                  <label class="custom-file-label" for="customFile">Elige el archivo...</label>
+                </div>
+              </div>
 
-
+              <div class="form-group submitButton">
+                <button type="submit" class="btn btn-primary">FINALIZAR</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="exportPopUp" tabindex="-1" role="dialog" aria-labelledby="exportPopUpTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exportPopUpTitle">Exportar</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal">
+              <div class="form-group nameAndInput">
+                <label for="inputName">Nombre</label>
+                <div>
+                  <select class="form-control">
+                    <option>Selecciona máquina virtual...</option>
+                    <option>MV1</option>
+                    <option>MV2</option>
+                    <option>MV3</option>
+                    <option>MV4</option>
+                    <option>MV5</option>
+                    <option>MV6</option>
+                    <option>MV11</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group nameAndInput">
+                <label for="inputPath">Ruta</label>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFile">
+                  <label class="custom-file-label" for="inputGroupFile01">Elige el destino...</label>
+                </div>
+              </div>
+              <div class="form-group submitButton">
+                <button type="submit" class="btn btn-primary">FINALIZAR</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 

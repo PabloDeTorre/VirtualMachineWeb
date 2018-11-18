@@ -1,0 +1,20 @@
+.modal-content{
+    background-color: #c9daf8ff;
+}
+.nameAndInput{
+    display: flex;
+    align-items: center;
+}
+.nameAndInput>div{
+    width: 100%;
+    margin-left: 25px;
+}
+.submitButton{
+    display: flex;
+}
+.submitButton>button{
+    margin: auto;
+    background-color: #4a86e8ff;
+    width: 200px;
+    color: black;
+}
