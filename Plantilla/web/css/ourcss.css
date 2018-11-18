@@ -36,6 +36,7 @@
 }
 .mainContent>div{
     flex-grow: 1;
+    max-width: 50%;
 }
 .mainContent>div>.card{
     background-color: #a4c2f4ff;
@@ -76,4 +77,11 @@
 .search{
     margin: 10px 0;
     
+}
+.mvState{
+    opacity: 0.5;
+    font-size: 14px;
+}
+.disabledIcon{
+    opacity: 0.4;
 }
