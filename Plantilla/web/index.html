@@ -29,7 +29,8 @@
     </div>
     <div class="iconMenu">
       <div class="card">
-        <img src="./img/add.png" data-toggle="tooltip" data-placement="bottom" title="Crear nueva máquina virtual [Ctrl+N]">
+        <img src="./img/add.png" class="add" data-toggle="modal" data-toggle="tooltip" data-target="#addPopUp"
+          data-placement="bottom" title="Crear nueva máquina virtual [Ctrl+N]"> <!-- AÑADIDA ESTA FILA -->
         <img src="./img/import.png" class="import" data-toggle="modal" data-toggle="tooltip" data-target="#importPopUp"
           data-placement="bottom" title="Importar máquina virtual [Ctrl+I]">
         <img src="./img/export.png" class="export" data-toggle="modal" data-toggle="tooltip" data-target="#exportPopUp"
@@ -678,6 +679,67 @@
     </div>
 
     <!-- Modals -->
+    <div class="modal fade" id="addPopUp" tabindex="-1" role="dialog" aria-labelledby="addPopUpTitle" aria-hidden="true"> <!-- AÑADIDO ESTE DIV ENTERO-->
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addPopUpTitle">Añadir</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal"> <!-- Este es el formulario que hay que hacer -->
+              <div class="addType">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" data-toggle="collapse" data-target="#vmDatas" aria-controls="vmDatas"
+                    aria-expanded="true" name="exampleRadios" id="inlineVM" value="optionVM" checked>
+                  <label class="form-check-label" for="inlineVM">Virtual Machine</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" data-toggle="collapse" data-target="#vmDatas" aria-controls="vmDatas"
+                  aria-expanded="false" name="exampleRadios" id="inlineGroup" value="optionGroup">
+                  <label class="form-check-label" for="inlineGroup">Group</label>
+                </div>
+              </div>
+              <div class="form-group nameAndInput">
+                <label for="inputName">Nombre</label>
+                <div>
+                  <input type="text" class="form-control" id="inputName" placeholder="Nombre">
+                </div>
+              </div>
+              <div class="fila">
+                <div class="campoCompleto form-group nameAndInput">
+                  RAM <input class="campoTexto form-control" type="text" class="form-control" placeholder="GB">
+                </div>  
+                <div class="campoCompleto form-group nameAndInput">
+                  Disco<input class="campoTexto form-control" type="text" class="form-control" placeholder="GB">
+                </div>
+              </div>
+              <div class="fila">
+                <div class="campoCompleto form-group nameAndInput">
+                  CPU<input class="campoTexto form-control" type="text" class="form-control" placeholder="%">
+                </div>  
+                <div class="campoCompleto form-group nameAndInput">
+                  Núcleos<input class="campoTexto form-control" type="text" class="form-control">
+                </div>
+              </div>
+              <div class="form-group nameAndInput">
+                <label for="inputPath">ISO</label>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="customFile">
+                  <label class="custom-file-label" for="customFile">Elige el archivo...</label>
+                </div>
+              </div>
+              <div class="form-group submitButton">
+                <button type="submit" class="btn btn-primary">FINALIZAR</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="modal fade" id="importPopUp" tabindex="-1" role="dialog" aria-labelledby="importPopUpTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -711,6 +773,7 @@
         </div>
       </div>
     </div>
+
     <div class="modal fade" id="exportPopUp" tabindex="-1" role="dialog" aria-labelledby="exportPopUpTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">

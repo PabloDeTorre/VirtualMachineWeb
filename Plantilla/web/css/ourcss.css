@@ -25,6 +25,9 @@
     margin-right: 20px;
     cursor: pointer;
 }
+.iconMenu .add { /* AÑADIDA ESTA LLAVE */
+    margin-bottom: 2px;
+}
 .iconMenu .import{
     margin-bottom: 13px;
 }
@@ -84,4 +87,14 @@
 }
 .disabledIcon{
     opacity: 0.4;
+}
+.fila {
+    display: flex;
+}
+.fila .campoCompleto {
+    display: flex;
+    margin: 4px;
+}
+.fila .campoCompleto .campoTexto {
+    margin: 0 4px;
 }
