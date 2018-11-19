@@ -397,12 +397,12 @@
                 <span class="draggableIndicator">.</span>
                 <h5 class="mb-0">
 
-                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#group1" aria-controls="group1">
+                  <button class="btn btn-link" type="button" data-toggle="collapse" data-toggle="tooltip" data-target="#group1" aria-controls="group1">
                     Grupo 1
                   </button>
                   <div class="actionIcons">
                     <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                    <img src="./img/addToGroup.png" data-toggle="tooltip" data-placement="bottom" title="Añadir">
+                    <img src="./img/addToGroup.png" class="addToGroup" data-target="#addToGroup" data-toggle="modal" data-placement="bottom" title="Añadir">
                     <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                   </div>
                 </h5>
@@ -437,7 +437,7 @@
                   </button>
                   <div class="actionIcons">
                     <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                    <img src="./img/addToGroup.png" data-toggle="tooltip" data-placement="bottom" title="Añadir">
+                    <img src="./img/addToGroup.png" class="addToGroup" data-target="#addToGroup" data-toggle="modal" data-placement="bottom" title="Añadir">
                     <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                   </div>
                 </h5>
@@ -487,7 +487,7 @@
                   </button>
                   <div class="actionIcons">
                     <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                    <img src="./img/addToGroup.png" data-toggle="tooltip" data-placement="bottom" title="Añadir">
+                    <img src="./img/addToGroup.png" class="addToGroup" data-target="#addToGroup" data-toggle="modal" data-placement="bottom" title="Añadir">
                     <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                   </div>
                 </h5>
@@ -551,7 +551,7 @@
                   </button>
                   <div class="actionIcons">
                     <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                    <img src="./img/addToGroup.png" data-toggle="tooltip" data-placement="bottom" title="Añadir">
+                    <img src="./img/addToGroup.png" class="addToGroup" data-target="#addToGroup" data-toggle="modal" data-placement="bottom" title="Añadir">
                     <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                   </div>
                 </h5>
@@ -615,7 +615,7 @@
                   </button>
                   <div class="actionIcons">
                     <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">
-                    <img src="./img/addToGroup.png" data-toggle="tooltip" data-placement="bottom" title="Añadir">
+                    <img src="./img/addToGroup.png" class="addToGroup" data-target="#addToGroup" data-toggle="modal" data-placement="bottom" title="Añadir">
                     <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">
                   </div>
                 </h5>
@@ -814,6 +814,104 @@
           </div>
         </div>
       </div>
+    </div>
+      <div class="modal fade" id="addToGroup" tabindex="-1" role="dialog" aria-labelledby="addToGroupTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addToGroupTitle">Añadir al Grupo</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="container2">
+              <div class="Busqueda">
+                <div class="modal-body">
+                  <div class="card">
+                    <form class="search">
+                      <input type="text" class="form-control" placeholder="VM1 o Grupo1" required>
+                    </form>
+                    <div class="accordion card-body" id="accordionExample">
+                      <div class="SwapTipe">
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" data-toggle="collapse" data-target="#vmDatas" aria-controls="vmDatas"
+                              aria-expanded="true" name="exampleRadios" id="inlineVM" value="optionVM" checked>
+                            <label class="form-check-label" for="inlineVM">Virtual Machine</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" data-toggle="collapse" data-target="#vmDatas" aria-controls="vmDatas"
+                            aria-expanded="false" name="exampleRadios" id="inlineGroup" value="optionGroup">
+                            <label class="form-check-label" for="inlineGroup">Group</label>
+                          </div>
+                        </div>
+                      <div class="card">
+                        <div class="card-header" id="headingMachine1">
+                          <h5 class="mv1">
+                            <button class="btn btn-link" type="button">VM1</button>
+                            <div class="actionIcons">
+                              <img src="img/add.png" data-toggle="add" data-placement="bottom" title="Add">
+                            </div>
+                          </h5>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-header" id="headingMachine1">
+                          <h5 class="mv1">
+                            <button class="btn btn-link" type="button">VM2</button>
+                            <div class="actionIcons">
+                              <img src="img/add.png" data-toggle="add" data-placement="bottom" title="Add">
+                            </div>
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="Added">
+                <div class="modal-body">
+                  <div class="card">
+                  <div class="accordion card-body" id="accordionExample">
+                      <h5 class="card-title">Añadido</h5>
+                      <div class="card">
+                        <div class="card-header" id="headingMachine1">
+                              <h5 class="mv1">
+                                <button class="btn btn-link" type="button">VM3</button>
+                                <div class="actionIcons">
+                                  <img src="img/quit.png" data-placement="bottom" title="delete">
+                                </div>
+                              </h5>
+                        </div>
+                        <div class="card-header" id="headingMachine1">
+                            <h5 class="mv1">
+                              <button class="btn btn-link" type="button">VM4</button>
+                              <div class="actionIcons">
+                                <img src="img/quit.png" data-placement="bottom" title="delete">
+                              </div>
+                            </h5>
+                      </div>
+                        <div class="containerr" data-placement="bottom">
+                          <div>
+                            <div class="form-group submitButton">
+                              <button type="submit" class="btn btn-primary">CANCELAR</button>
+                            </div>
+                          </div>
+                          <div>
+                            <div class="form-group submitButton">
+                              <button type="submit" class="btn btn-primary">FINALIZAR</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 

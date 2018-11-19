@@ -1,5 +1,6 @@
 .modal-content{
     background-color: #c9daf8ff;
+    width: 800px;
 }
 .nameAndInput{
     display: flex;
@@ -17,4 +18,13 @@
     background-color: #4a86e8ff;
     width: 200px;
     color: black;
+}
+.container2{
+    display: flex;
+}
+.SwapTipe{
+    display: flex;
+}
+.containerr{
+    display: flex;
 }
