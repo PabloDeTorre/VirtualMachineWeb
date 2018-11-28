@@ -86,6 +86,20 @@ let groups = [
 $(document).ready(function(){
     prepareMachines();
     prepareGroups();
+
+    //Add to group modal
+    $(".addToGroup").click(function () {
+        renderNotAddedList(machines, groups);
+    })
+    
+
+    $("#addToGroupForm").change(function(){
+        showAddToGroupType();
+    });
+    $("#addToGroupInput").keyup(function(){
+        console.log("sjsjsjsjjs")
+        showAddToGroupType();
+    });
 });
 
 function prepareMachines() {
@@ -116,3 +130,93 @@ function getName(id) {
     }
     return null;
 }
+function renderNotAddedItem(name, id, type) {
+    name = name.replace(/\s/g, '');
+    var item = '<div class="card '+type+'" id="'+name+'">'+
+    '<div class="card-header" id="heading' + name + '">'+
+      '<h5 class="mb-0">'+
+        '<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#'+name+'"aria-controls="'+name+'">'+
+          name+
+        '</button>'+
+        '<div class="actionIcons">'+
+          '<img src="./img/addToGroup.png" data-toggle="tooltip" data-placement="bottom" title="Añadir">'+
+        '</div>'+
+      '</h5>'+
+    '</div>'+
+  '</div>';
+
+
+  return item;
+}
+
+function renderAddedItem(name, id, type) {
+    name = name.replace(/\s/g, '');
+    var item = '<div class="card '+type+'" id="'+id+'">'+
+    '<div class="card-header" id="heading' + name + '">'+
+      '<h5 class="mb-0">'+
+        '<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#'+name+'"aria-controls="'+name+'">'+
+          name+
+        '</button>'+
+        '<div class="actionIcons">'+
+          '<img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Quitar">'+
+        '</div>'+
+      '</h5>'+
+    '</div>'+
+  '</div>';
+
+  return item;
+}
+function renderNotAddedList(machines, groups) {
+    var groupsHtml = "";
+    groups.forEach( g => {
+        groupsHtml += renderNotAddedItem(g.name, g.id, 'group');
+    });
+    var machinesHtml = "";
+    machines.forEach( m => {
+        machinesHtml += renderNotAddedItem(m.name, m.id, 'machine');
+    });
+    $("#addToGroupItems").append(groupsHtml);
+    $("#addToGroupItems").append(machinesHtml);
+    showAddToGroupType();
+}
+function showAddToGroupType() {
+    var value = $('input[name=addToGroupRadio]:checked', '#addToGroupForm').val();
+    if(value === "optionVM"){
+        $(".group").hide();
+        if ($("#addToGroupInput").val().length>0) {
+            for (let index = 0; index < $('.machine').length; index++) {
+                var mId = $('.machine')[index].id;
+                if(!mId.includes($("#addToGroupInput").val())){
+                    $("#"+mId).hide();
+                }
+                else{
+                    $("#"+mId).show();
+                }
+                
+            }
+        }
+        else{
+            $('.machine').show();
+        }
+        
+    }
+    else{
+        if ($("#addToGroupInput").val().length>0) {
+            for (let index = 0; index < $('.group').length; index++) {
+                var gId = $('.group')[index].id;
+                if(!gId.includes($("#addToGroupInput").val())){
+                    $("#"+gId).hide();
+                }
+                else{
+                    $("#"+gId).show();
+                }
+                
+            }
+        }
+        else{
+            $('.group').show();
+        }
+        $('.machine').hide();
+    }
+}
+
