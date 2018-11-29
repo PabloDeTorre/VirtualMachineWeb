@@ -235,8 +235,8 @@
     <div class="modal-dialog modal-dialog-centered customDialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="addToGroupTitle">Añadir al Grupo</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <h5 class="modal-title" id="addToGroupTitle">Añadir a </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="addToGroupClose">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -244,6 +244,7 @@
           <div class="addToGroupContainer">
             <div class="itemsList addToGroupColumn">
               <form class="search" id="addToGroupForm">
+                <input type="hidden" id="groupId">
                 <input type="text" class="form-control" id="addToGroupInput" placeholder="Buscar" required>
               <div class="addType">
 
@@ -267,39 +268,11 @@
             </div>
             <div class="itemsAdded addToGroupColumn">
               <h6 class="titleCenter">Añadido</h6>
-              <div class="contents">
-                <div class="card">
-                  <div class="card-header" id="headingMachine3">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine3"
-                        aria-controls="machine4">
-                        VM3
-                      </button>
-                      <div class="actionIcons">
-                        <img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Quitar">
-                      </div>
-                    </h5>
-                  </div>
+              <div class="contents" id="addedToGroupItems">
 
                 </div>
-                <div class="card">
-                  <div class="card-header" id="headingGroup2">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#group2"
-                        aria-controls="machine4">
-                        Grupo 2
-                      </button>
-                      <div class="actionIcons">
-                        <img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Quitar">
-                      </div>
-                    </h5>
-                  </div>
-
-                </div>
-                <div class="form-group submitButton">
-                  <button class="btn btn-primary cancelar">CANCELAR</button>
-                  <button class="btn btn-primary">FINALIZAR</button>
-
+                <div class="form-group addToGroupExit">
+                  <button class="btn btn-primary" id="addToGroupSubmit" data-dismiss="modal" aria-label="Close">Salir</button>
                 </div>
               </div>
             </div>
