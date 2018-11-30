@@ -96,7 +96,58 @@ function prepareMachines() {
     $("#machines").html("");
     machines.forEach( v => {
         let tag = "machine" + v.id;
-        $("#machines").append('<div class="card" draggable="true">        <div class="card-header" id="headingMachine' + v.id + '">          <span class="draggableIndicator">.</span>          <h5 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#' + tag + '" aria-controls="' + tag + '">' + v.name + '</button><div class="actionIcons"><img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar"><div class="dropdown"> <img src="./img/shutdown.png" class="dropdown-toggle" id="dropdownMenuButton"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip"            data-placement="bottom" title="Apagar/Reiniciar/Suspender">          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">            <button class="dropdown-item" href="#">Encender</button>            <button class="dropdown-item" href="#" disabled>Suspender</button>            <button class="dropdown-item" href="#" disabled>Reiniciar</button>            <button class="dropdown-item" href="#" disabled>Apagar</button>          </div></div><img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar"></div></h5></div><div id="machine' + v.id + '" class="collapse" aria-labelledby="headingMachine' + v.id + '" data-parent="#accordionExample">        <div class="card-body">          <table>            <tr>              <th>Nombre</th>              <td>' + v.name + '</td>            </tr>            <tr>              <th>RAM</th>              <td>' + v.ram + 'GB</td>            </tr>            <tr>              <th>Disco</th>              <td>' + v.disc + 'GB</td>            </tr>            <tr>              <th>CPU</th>              <td>' + v.cpu + '%</td>            </tr>            <tr>              <th>Núcleos</th>              <td>' + v.cores + '</td>            </tr>            <tr>              <th>IP</th>              <td>'+ v.ip + '</td>            </tr>          </table>        </div>      </div>            </div>');
+        $("#machines").append('\
+        <div class="card" draggable="true">\
+            <div class="card-header" id="headingMachine' + v.id + '">\
+                <span class="draggableIndicator">.</span>\
+                <h5 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#' + tag + '" aria-controls="' + tag + '">' + v.name + '</button>\
+                    <div class="actionIcons">\
+                        <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">\
+                        <div class="dropdown">\
+                            <img src="./img/shutdown.png" class="dropdown-toggle" id="dropdownMenuButton"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip"\
+                                data-placement="bottom" title="Apagar/Reiniciar/Suspender">\
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">\
+                                <button class="dropdown-item" href="#">Encender</button>\
+                                <button class="dropdown-item" href="#" disabled>Suspender</button>\
+                                <button class="dropdown-item" href="#" disabled>Reiniciar</button>\
+                                <button class="dropdown-item" href="#" disabled>Apagar</button>\
+                            </div>\
+                        </div>\
+                        <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">\
+                    </div>\
+                </h5>\
+            </div>\
+            <div id="machine' + v.id + '" class="collapse" aria-labelledby="headingMachine' + v.id + '" data-parent="#accordionExample">\
+                <div class="card-body">\
+                    <table>\
+                        <tr>\
+                            <th>Nombre</th>\
+                            <td>' + v.name + '</td>\
+                        </tr>\
+                        <tr>\
+                            <th>RAM</th>\
+                            <td>' + v.ram + 'GB</td>\
+                        </tr>\
+                        <tr>\
+                            <th>Disco</th>\
+                            <td>' + v.disc + 'GB</td>\
+                        </tr>\
+                        <tr>\
+                            <th>CPU</th>\
+                            <td>' + v.cpu + '%</td>\
+                        </tr>\
+                        <tr>\
+                            <th>Núcleos</th>\
+                            <td>' + v.cores + '</td>\
+                        </tr>\
+                        <tr>\
+                            <th>IP</th>\
+                            <td>'+ v.ip + '</td>\
+                        </tr>\
+                    </table>\
+                </div>\
+            </div>\
+        </div>');
     });
 }
 
