@@ -70,7 +70,7 @@ class Params {
     this.ram = Params.checkRange(ram, 1024, 1024*64, "ram");
     this.hdd = Params.checkRange(hdd, 1024, undefined, "hdd");
     this.cpu = Params.checkRange(cpu, 0, 100, "cpu");
-    this.cores = Params.checkRange(cpu, 1, undefined, "cores");
+    this.cores = Params.checkRange(cores, 1, undefined, "cores");
     this.ip = Params.checkIp(ip);
     this.iso = iso;
     this.action = action;

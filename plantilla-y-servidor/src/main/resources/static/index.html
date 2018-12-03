@@ -13,11 +13,10 @@
 
   <!-- JavaScript -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-   <!-- Drag & drop -->
-   <script src="js/jquery-ui.min.js"></script>
-   <!-- Validation -->
-   <script src="js/parsley.min.js"></script>
-  <script src="js/ourjs.js" type="module"></script>
+
+
+
+
   <!--<script src="js/addToGroup.js"></script> -->
 
   <title>Virtual Machine Web</title>
@@ -89,31 +88,31 @@
           </button>
         </div>
         <div class="modal-body">
-          <form class="form-horizontal">
+          <form class="form-horizontal" id="addForm">
             <!-- Este es el formulario que hay que hacer -->
             <div class="addType">
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" data-toggle="collapse" data-target="#vmDatas"
-                  aria-controls="vmDatas" aria-expanded="true" name="exampleRadios" id="inlineVM" value="optionVM"
+                  aria-controls="vmDatas" aria-expanded="true" id="inlineVM" value="optionVM" name="addRadio"
                   checked>
                 <label class="form-check-label" for="inlineVM">Virtual Machine</label>
               </div>
               <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" data-toggle="collapse" data-target="#vmDatas"
-                  aria-controls="vmDatas" aria-expanded="false" name="exampleRadios" id="inlineGroup" value="optionGroup">
+                  aria-controls="vmDatas" aria-expanded="false" id="inlineGroup" value="optionGroup" name="addRadio">
                 <label class="form-check-label" for="inlineGroup">Group</label>
               </div>
             </div>
             <div class="form-group nameAndInput">
               <label for="inputName">Nombre</label>
               <div>
-                <input type="text" class="form-control" id="addMachineGroupName" placeholder="Nombre">
+                <input type="text" class="form-control" id="addMachineGroupName" placeholder="Nombre" data-parsley-name="" required>
               </div>
             </div>
             <div class="form-group nameAndInput">
               <label for="inputName">Ip</label>
               <div>
-                <input type="text" class="form-control" id="addMachineGroupIp" placeholder="Ip">
+                <input type="text" class="form-control" id="addMachineGroupIp" placeholder="Ip" data-parsley-ip="" required>
               </div>
             </div>
             <div class="fila">
@@ -123,13 +122,15 @@
                 <div class="campoCompleto form-group nameAndInput">
                   <label>RAM</label>
                   <div>
-                    <input id="addMachineGroupRam" class="campoTexto form-control" type="number" min="1024" max="6144" class="form-control" placeholder="MB">
+                    <input id="addMachineGroupRam" class="campoTexto form-control" type="number" min="1024" max="65536"
+                      class="form-control" placeholder="MB" required>
                   </div>
                 </div>
                 <div class="campoCompleto form-group nameAndInput">
                   <label>CPU</label>
                   <div>
-                    <input id="addMachineGroupCPU" class="campoTexto form-control" type="text" class="form-control" placeholder="%">
+                    <input id="addMachineGroupCPU" class="campoTexto form-control" type="number" min="0" max="100" class="form-control"
+                      placeholder="%" required>
                   </div>
                 </div>
 
@@ -138,13 +139,14 @@
                 <div class="campoCompleto form-group nameAndInput">
                   <label>Disco</label>
                   <div>
-                    <input id="addMachineGroupHdd" class="campoTexto form-control" type="number" min="1024" class="form-control" placeholder="MB">
+                    <input id="addMachineGroupHdd" class="campoTexto form-control" type="number" min="1024" class="form-control"
+                      placeholder="MB" required>
                   </div>
                 </div>
                 <div class="campoCompleto form-group nameAndInput">
                   <label>Cores</label>
                   <div>
-                    <input id="addMachineGroupCores" class="campoTexto form-control" type="text" class="form-control">
+                    <input id="addMachineGroupCores" class="campoTexto form-control" type="number" min="1" class="form-control" required>
                   </div>
                 </div>
               </div>
@@ -158,6 +160,97 @@
             </div>
             <div class="form-group submitButton">
               <button id="addMachineOrGroupButton" class="btn btn-primary">FINALIZAR</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="editPopUp" tabindex="-1" role="dialog" aria-labelledby="editPopUpTitle" aria-hidden="true">
+    <!-- AÑADIDO ESTE DIV ENTERO-->
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editPopUpTitle">Editar máquina</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" id="editForm">
+            <!-- Este es el formulario que hay que hacer -->
+            <div class="editType">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" data-toggle="collapse" data-target="#vmDatas"
+                  aria-controls="vmDatas" aria-expanded="true" id="inlineVM" value="optionVM" name="editRadio"
+                  checked>
+                <label class="form-check-label" for="inlineVM">Virtual Machine</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" data-toggle="collapse" data-target="#vmDatas"
+                  aria-controls="vmDatas" aria-expanded="false" id="inlineGroup" value="optionGroup" name="editRadio">
+                <label class="form-check-label" for="inlineGroup">Group</label>
+              </div>
+            </div>
+            <div class="form-group nameAndInput">
+              <label for="inputName">Nombre</label>
+              <div>
+                <input type="text" class="form-control" id="editMachineGroupName" placeholder="Nombre" disabled>
+              </div>
+            </div>
+            <div class="form-group nameAndInput">
+              <label for="inputName">Ip</label>
+              <div>
+                <input type="text" class="form-control" id="editMachineGroupIp" placeholder="Ip" data-parsley-ip="" required>
+              </div>
+            </div>
+            <div class="fila">
+
+
+              <div class="columna">
+                <div class="campoCompleto form-group nameAndInput">
+                  <label>RAM</label>
+                  <div>
+                    <input id="editMachineGroupRam" class="campoTexto form-control" type="number" min="1024" max="65536"
+                      class="form-control" placeholder="MB" required>
+                  </div>
+                </div>
+                <div class="campoCompleto form-group nameAndInput">
+                  <label>CPU</label>
+                  <div>
+                    <input id="editMachineGroupCPU" class="campoTexto form-control" type="number" min="0" max="100" class="form-control"
+                      placeholder="%" required>
+                  </div>
+                </div>
+
+              </div>
+              <div class="columna segundaColumna">
+                <div class="campoCompleto form-group nameAndInput">
+                  <label>Disco</label>
+                  <div>
+                    <input id="editMachineGroupHdd" class="campoTexto form-control" type="number" min="1024" class="form-control"
+                      placeholder="MB" required>
+                  </div>
+                </div>
+                <div class="campoCompleto form-group nameAndInput">
+                  <label>Cores</label>
+                  <div>
+                    <input id="editMachineGroupCores" class="campoTexto form-control" type="number" min="1" class="form-control" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group nameAndInput">
+              <label for="inputPath">ISO</label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Elige el archivo...</label>
+              </div>
+            </div>
+            <div class="form-group submitButton">
+              <button id="editMachineOrGroupButton" class="btn btn-primary">FINALIZAR</button>
             </div>
 
           </form>
@@ -192,7 +285,7 @@
             </div>
 
             <div class="form-group submitButton">
-              <button type="submit" class="btn btn-primary"  onclick="importToJSON()">FINALIZAR</button>
+              <button type="submit" class="btn btn-primary" onclick="importToJSON()">FINALIZAR</button>
             </div>
           </form>
         </div>
@@ -256,20 +349,20 @@
               <form class="search" id="addToGroupForm">
                 <input type="hidden" id="groupId">
                 <input type="text" class="form-control" id="addToGroupInput" placeholder="Buscar" required>
-              <div class="addType">
+                <div class="addType">
 
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" data-toggle="collapse" data-target="#vmDatas"
-                    aria-controls="vmDatas" aria-expanded="true" name="addToGroupRadio" id="inlineVM" value="optionVM"
-                    checked>
-                  <label class="form-check-label" for="inlineVM">Virtual Machine</label>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" data-toggle="collapse" data-target="#vmDatas"
+                      aria-controls="vmDatas" aria-expanded="true" name="addToGroupRadio" id="inlineVM" value="optionVM"
+                      checked>
+                    <label class="form-check-label" for="inlineVM">Virtual Machine</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" data-toggle="collapse" data-target="#vmDatas"
+                      aria-controls="vmDatas" aria-expanded="false" name="addToGroupRadio" id="inlineGroup" value="optionGroup">
+                    <label class="form-check-label" for="inlineGroup">Group</label>
+                  </div>
                 </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" data-toggle="collapse" data-target="#vmDatas"
-                    aria-controls="vmDatas" aria-expanded="false" name="addToGroupRadio" id="inlineGroup" value="optionGroup">
-                  <label class="form-check-label" for="inlineGroup">Group</label>
-                </div>
-              </div>
               </form>
               <div class="contents" id="addToGroupItems">
               </div>
@@ -280,16 +373,16 @@
               <h6 class="titleCenter">Añadido</h6>
               <div class="contents" id="addedToGroupItems">
 
-                </div>
-                <div class="form-group addToGroupExit">
-                  <button class="btn btn-primary" id="addToGroupSubmit" data-dismiss="modal" aria-label="Close">Salir</button>
-                </div>
+              </div>
+              <div class="form-group addToGroupExit">
+                <button class="btn btn-primary" id="addToGroupSubmit" data-dismiss="modal" aria-label="Close">Salir</button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
   </div>
 
@@ -300,6 +393,13 @@
   <script src="js/jquery-3.3.1.slim.min.js"></script>
   <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+
+  <!-- Drag & drop -->
+  <script src="js/jquery-ui.min.js"></script>
+  <!-- Validation -->
+  <script src="js/parsley.min.js"></script>
+  <script src="js/ourjs.js" type="module"></script>
+
 </body>
 
 </html>

@@ -5,7 +5,7 @@ $(document).ready(function () {
     const apiServer = 'http://gin.fdi.ucm.es:8080/';
 
     // aqui guardaremos siempre el estado de la aplicacion, por ejemplo para verificar si 
-    // los nombres de vms existen o no; ver update()
+    // los nombres de vms existen o no; ver update(r)
     let state = { vms: [], groups: [] };
 
     let url = apiServer + "314161";
@@ -13,22 +13,40 @@ $(document).ready(function () {
 
     // actualiza la visualizacion
     Vt.list(url).then(r => {
-        state = r;
         console.log(state);
-        update();
+        update(r);
+
+        $(".editButton").click(function (e) {
+            openEditModal(e);
+        });
+        $(".power-button").click(function (e) {
+            setState(e.currentTarget.id, e.currentTarget.lastChild);
+        });
+        $(".deleteButton").click(function(e){
+            removeItem(e.currentTarget.id);
+        })
     });
 
     $(".close").click(function () {
-        update()
-    })
-    $("#addMachineOrGroupButton").click(function() {
-        console
+
+    });
+    $("#addMachineOrGroupButton").click(function () {
         addMachineOrGroup();
-    })
-    function update() {
+    });
+    $("#editMachineOrGroupButton").click(function () {
+        editMachineOrGroup();
+    });
+    $("#addForm").change(function () {
+        showAddOrGroupType();
+    });
+    function update(r) {
+        state = r;
         addIdParam();
+        state.vms.sort(sortByName);
+        state.groups.sort(sortByName);
         prepareMachines(state.vms);
         prepareGroups(state.groups);
+        
     }
     function prepareMachines(machines) {
         $("#machines").html("");
@@ -39,19 +57,20 @@ $(document).ready(function () {
             <div class="card-header" id="headingMachine' + v.id + '">\
                 <span class="draggableIndicator">.</span>\
                 <h5 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#' + tag + '" aria-controls="' + tag + '">' + v.name + '</button>\
+                    <span class="mvState">'+ parseVMState(v.id) + '</span>\
                     <div class="actionIcons">\
-                        <img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">\
+                        <img src="./img/edit.png" id="'+ v.id + '" class="editButton" data-toggle="modal" data-toggle="tooltip" data-target="#editPopUp" data-toggle="tooltip" data-placement="bottom" title="Editar">\
                         <div class="dropdown">\
                             <img src="./img/shutdown.png" class="dropdown-toggle" id="dropdownMenuButton"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip"\
                                 data-placement="bottom" title="Apagar/Reiniciar/Suspender">\
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">\
-                                <button class="dropdown-item" href="#">Encender</button>\
-                                <button class="dropdown-item" href="#" disabled>Suspender</button>\
-                                <button class="dropdown-item" href="#" disabled>Reiniciar</button>\
-                                <button class="dropdown-item" href="#" disabled>Apagar</button>\
+                                <button id="'+ v.id + '" class="dropdown-item power-button"  href="#"' + buttonDisabled(v.id, "start") + '>Encender</button>\
+                                <button id="'+ v.id + '" class="dropdown-item power-button" href="#" ' + buttonDisabled(v.id, "suspend") + '>Suspender</button>\
+                                <button id="'+ v.id + '" class="dropdown-item power-button" href="#" ' + buttonDisabled(v.id, "restart") + '>Reiniciar</button>\
+                                <button id="'+ v.id + '" class="dropdown-item power-button" href="#" ' + buttonDisabled(v.id, "stop") + '>Apagar</button>\
                             </div>\
                         </div>\
-                        <img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">\
+                        <img src="./img/delete.png" class="deleteButton" id="'+ v.id + '" data-toggle="tooltip" data-placement="bottom" title="Eliminar">\
                     </div>\
                 </h5>\
             </div>\
@@ -101,9 +120,8 @@ $(document).ready(function () {
                 g.name +
                 '</button>' +
                 '<div class="actionIcons">' +
-                '<img src="./img/edit.png" data-toggle="tooltip" data-placement="bottom" title="Editar">' +
                 '<img src="./img/addToGroup.png" class="addToGroup" data-target="#addToGroup" data-toggle="modal" data-placement="bottom" title="Añadir" onclick=openAddToGroupModal("' + g.id + '")>' +
-                '<img src="./img/delete.png" data-toggle="tooltip" data-placement="bottom" title="Eliminar">' +
+                '<img src="./img/delete.png" class="deleteButton" id="'+ g.id + '" data-toggle="tooltip" data-placement="bottom" title="Eliminar">' +
                 '</div>' +
                 '</h5>' +
                 '</div>' +
@@ -177,10 +195,12 @@ $(document).ready(function () {
         return null;
     }
     function getItem(id) {
+        var machines = state.vms;
         for (let v in machines) {
             if (machines[v].id == id)
                 return machines[v];
         }
+        var groups = state.groups;
         for (let g in groups) {
             if (groups[g].id == id)
                 return groups[g];
@@ -337,24 +357,30 @@ $(document).ready(function () {
         showAddToGroupType();
     }
     function addMachineOrGroup() {
-        // if ( ! $("#addForm").parsley().isValid()) {
-        //     return;
-        // }
-        //diferenciar entre nueva maquina o grupo
-        const sampleParams = new Vt.Params(
-            $("#addMachineGroupName").val(),
-            parseInt($("#addMachineGroupRam").val()),
-            parseInt($("#addMachineGroupHdd").val()),
-            parseInt($("#addMachineGroupCPU").val()),
-            parseInt($("#addMachineGroupCores").val()),
-            $("#addMachineGroupIp").val()
-        );
-        console.log(sampleParams);
-        Vt.add(url, sampleParams).then(r => {
-            state = r;
-            console.log(r);
-            update();
-        })
+        var value = $('input[name=addRadio]:checked', '#addForm').val();
+        if (!$("#addForm").parsley().isValid()) {
+            return;
+        }
+        if (value == "optionVM") {
+
+            debugger;
+            const sampleParams = new Vt.Params(
+                $("#addMachineGroupName").val(),
+                parseInt($("#addMachineGroupRam").val()),
+                parseInt($("#addMachineGroupHdd").val()),
+                parseInt($("#addMachineGroupCPU").val()),
+                parseInt($("#addMachineGroupCores").val()),
+                $("#addMachineGroupIp").val()
+            );
+
+            console.log(sampleParams);
+            Vt.add(url, sampleParams).then(r => update(r));
+        }
+        else {
+            const name = $("#addMachineGroupName").val();
+            Vt.link(url, [], name).then(r => update(r));
+        }
+        $("#addForm").parsley().reset();
     }
     function addIdParam() {
         for (let v in state.vms) {
@@ -366,5 +392,192 @@ $(document).ready(function () {
                 state.groups[g].id = state.groups[g].name.replace(/\s+/g, '');
         }
     }
+    function showAddOrGroupType() {
+        var value = $('input[name=addRadio]:checked', '#addForm').val();
+        console.log(value);
+        if (value == "optionVM") {
+            $("#addMachineGroupRam").parent().parent().show();
+            $("#addMachineGroupHdd").parent().parent().show();
+            $("#addMachineGroupCPU").parent().parent().show();
+            $("#addMachineGroupCores").parent().parent().show();
+            $("#addMachineGroupIp").parent().parent().show();
+            $("#customFile").parent().parent().show();
 
+            $("#addMachineGroupRam").attr("required", true);
+            $("#addMachineGroupHdd").attr("required", true);
+            $("#addMachineGroupCPU").attr("required", true);
+            $("#addMachineGroupCores").attr("required", true);
+            $("#addMachineGroupIp").attr("required", true);
+        }
+        else {
+            $("#addMachineGroupRam").parent().parent().hide();
+            $("#addMachineGroupHdd").parent().parent().hide();
+            $("#addMachineGroupCPU").parent().parent().hide();
+            $("#addMachineGroupCores").parent().parent().hide();
+            $("#addMachineGroupIp").parent().parent().hide();
+            $("#customFile").parent().parent().hide();
+
+            $("#addMachineGroupRam").attr("required", false);
+            $("#addMachineGroupHdd").attr("required", false);
+            $("#addMachineGroupCPU").attr("required", false);
+            $("#addMachineGroupCores").attr("required", false);
+            $("#addMachineGroupIp").attr("required", false);
+        }
+    }
+    function openEditModal(e) {
+        var item = getItem(e.currentTarget.id);
+        $("#editMachineGroupName").val(item.name);
+
+        $('#inlineVM').attr("checked", true);
+        showAddOrGroupType();
+
+        $("#editMachineGroupRam").val(item.ram);
+        $("#editMachineGroupHdd").val(item.hdd);
+        $("#editMachineGroupCPU").val(item.cpu);
+        $("#editMachineGroupCores").val(item.cores);
+        $("#editMachineGroupIp").val(item.ip);
+
+    }
+    function editMachineOrGroup() {
+        if (!$("#editForm").parsley().isValid()) {
+            return;
+        }
+        const params = new Vt.Params(
+            $("#editMachineGroupName").val(),
+            parseInt($("#editMachineGroupRam").val()),
+            parseInt($("#editMachineGroupHdd").val()),
+            parseInt($("#editMachineGroupCPU").val()),
+            parseInt($("#editMachineGroupCores").val()),
+            $("#editMachineGroupIp").val(),
+            undefined
+        );
+        Vt.set(url, params, [$("#editMachineGroupName").val()]).then(r => update(r));
+        $("#editForm").parsley().reset();
+    }
+    function parseVMState(id) {
+        var item = getItem(id);
+        switch (item.state) {
+            case "start":
+                return "Corriendo...";
+                break;
+            case "stop":
+                return "";
+                break;
+            case "suspend":
+                return "Suspendida...";
+                break;
+            case "restart":
+                return "Reniniciando...";
+                break;
+            default:
+                break;
+        }
+    }
+    function setState(id, state) {
+        var item = getItem(id);
+        switch (state.data) {
+            case "Encender":
+                state = "start";
+                break;
+            case "Suspender":
+                state = "suspend";
+                break;
+            case "Reiniciar":
+                state = "restart";
+                break;
+            case "Apagar":
+                state = "stop";
+                break;
+
+            default:
+                break;
+        }
+        const params = new Vt.Params(
+            item.name,
+            item.ram,
+            item.hdd,
+            item.cpu,
+            item.cores,
+            item.ip,
+            undefined,
+            state
+        );
+        console.log(params);
+        Vt.set(url, params, [item.name]).then(r => update(r));
+        location.reload();
+    }
+    function buttonDisabled(id, buttonState) {
+        var item = getItem(id);
+        switch (item.state) {
+            case "start":
+                if (buttonState == "start") {
+                    return "disabled";
+                }
+                break;
+            case "stop":
+                if (buttonState == "stop" || buttonState == "suspend" || buttonState == "restart") {
+                    return "disabled";
+                }
+                break;
+            case "suspend":
+                if (buttonState == "suspend") {
+                    return "disabled";
+                }
+                break;
+            case "restart":
+                if (buttonState == "suspend" || buttonState == "restart" || buttonState == "start") {
+                    return "disabled";
+                }
+                break;
+            default:
+                break;
+        }
+        return "";
+    }
+    function sortByName(x, y) {
+        return x.name > y.name;
+    }
+    function removeItem(id) {
+        Vt.rm(url, [getItem(id).name]).then(r => update(r));
+        location.reload();
+    }
+
+    //
+    // --- Validación de formularios ---
+    //
+    const parsleyForBootstrap4 = {
+        errorClass: 'is-invalid text-danger',
+        successClass: 'is-valid',
+        errorsWrapper: '<span class="form-text text-danger"></span>',
+        errorTemplate: '<span></span>',
+        trigger: 'change'
+    }
+
+    $("#addForm").parsley(parsleyForBootstrap4);
+    $("#editForm").parsley(parsleyForBootstrap4);
+
+    // define un validador llamado newname, que se activa usando
+    // un atributo data-parsley-newname="" en el campo a validar
+    window.Parsley.addValidator('name', {
+        validateString: function (value) {
+            let names = new Set();
+            state.vms.forEach(vm => names.add(vm.name))
+            state.groups.forEach(group => names.add(group.name))
+            return !names.has(value);
+        },
+        messages: {
+            en: 'Chosen name already exists. Find another',
+            es: "Ese nombre ya existe. Elige otro"
+        }
+    });
+    window.Parsley.addValidator('ip', {
+        validateString: function (value) {
+            // from https://stackoverflow.com/questions/10006459/regular-expression-for-ip-address-validation?lq=1
+            return /^(?=\d+\.\d+\.\d+\.\d+$)(?:(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])\.?){4}$/.test(value);
+        },
+        messages: {
+            en: 'Invalid IP, try another',
+            es: "IP no válida, prueba otra"
+        }
+    });
 });

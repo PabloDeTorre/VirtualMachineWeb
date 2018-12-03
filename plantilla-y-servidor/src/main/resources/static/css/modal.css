@@ -48,6 +48,10 @@
     margin: auto;
     margin-bottom: 15px;
 }
+.editType{
+    height: 0;
+    opacity: 0;
+}
 .addType>div{
     margin: 0;
     padding: 0 25px;
