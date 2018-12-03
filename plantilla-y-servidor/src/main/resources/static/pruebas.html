@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <title>VmToolkit</title>
+  </head>
+  <body>
+
+   
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Pruebas de API JS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" id="apikey_input" type="text" value="1234">
+                <button class="btn btn-outline-success my-2 my-sm-0" id="apikey_button">Cambiar apiKey</button>
+            </form>
+        </div>
+        </nav>
+    
+    <!--- vista principal, en 3 columnas --->
+    
+        <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                Acciones
+            </div>
+            <div class="col-sm-4">
+                Argumentos
+            </div>
+            <div class="col-sm-4">
+                Resultado
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col">
+             <button id="populate">Poblar servidor</button><br>
+             <button id="list">Actualizar resultado</button><br>
+            </div>
+            <div class="col">           
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Cras justo odio
+                        <span class="badge badge-primary badge-pill">14</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Dapibus ac facilisis in
+                        <span class="badge badge-primary badge-pill">2</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Morbi leo risus
+                        <span class="badge badge-primary badge-pill">1</span>
+                        <span class="badge badge-danger badge-pill">1</span>                    
+                        <span class="badge badge-warning badge-pill">1</span>                    
+                    </li>
+                </ul>
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Cras justo odio
+                        <span class="badge badge-primary badge-pill">14</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Dapibus ac facilisis in
+                        <span class="badge badge-primary badge-pill">2</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Morbi leo risus
+                        <span class="badge badge-primary badge-pill">1</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <pre id="salida">                    
+                </pre>
+            </div>                            
+        </div>    
+    </div>
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.3.1.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src="js/jquery-ui.min.js"></script>
+    
+    <!-- Behaviors & bindings between UI and server API -->
+    <script type="module" src="js/vt.js"></script>
+  </body>
+</html>

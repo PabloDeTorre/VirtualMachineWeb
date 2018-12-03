@@ -8,6 +8,14 @@
 }
 .nameAndInput label{
     margin-bottom: 0;
+    width: 100px;
+}
+.campoCompleto label{
+    margin-bottom: 0;
+    width: 130px;
+}
+.nameAndInput .custom-file-label{
+    width: inherit;
 }
 .nameAndInput>div{
     width: 100%;

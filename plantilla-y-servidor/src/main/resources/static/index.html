@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/ourcss.css">
+  <link rel="stylesheet" href="css/modal.css">
+
+  <!-- JavaScript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+   <!-- Drag & drop -->
+   <script src="js/jquery-ui.min.js"></script>
+   <!-- Validation -->
+   <script src="js/parsley.min.js"></script>
+  <script src="js/ourjs.js" type="module"></script>
+  <!--<script src="js/addToGroup.js"></script> -->
+
+  <title>Virtual Machine Web</title>
+</head>
+
+<body>
+  <!-- PRACTICA 6: tu contenido aqui -->
+
+
+  <div class="container">
+    <div class="topMenu">
+      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <button type="button" class="btn">Archivo</button>
+        <button type="button" class="btn">Editar</button>
+        <button type="button" class="btn">Selección</button>
+        <button type="button" class="btn">Ayuda</button>
+      </div>
+    </div>
+    <div class="iconMenu">
+      <div class="card">
+        <img src="./img/add.png" class="add" data-toggle="modal" data-toggle="tooltip" data-target="#addPopUp"
+          data-placement="bottom" title="Crear nueva máquina virtual [Ctrl+N]"> <!-- AÑADIDA ESTA FILA -->
+        <img src="./img/import.png" class="import" data-toggle="modal" data-toggle="tooltip" data-target="#importPopUp"
+          data-placement="bottom" title="Importar máquina virtual [Ctrl+I]">
+        <img src="./img/export.png" class="export" data-toggle="modal" data-toggle="tooltip" data-target="#exportPopUp"
+          data-placement="bottom" title="Exportar máquina virtual [Ctrl+E]">
+      </div>
+    </div>
+    <div class="mainContent">
+      <div class="machines">
+        <form class="search">
+          <input type="text" class="form-control" placeholder="Buscar MVs" required>
+        </form>
+        <div class="card">
+          <div class="accordion card-body" id="accordionExample">
+            <h5 class="card-title">Máquinas Virtuales</h5>
+            <div id="machines"></div>
+          </div>
+        </div>
+
+      </div>
+      <div class="groups">
+        <form class="search">
+          <input type="text" class="form-control" placeholder="Buscar grupos" required>
+        </form>
+        <div class="card">
+          <div class="accordion card-body" id="accordionExample">
+            <h5 class="card-title">Grupos</h5>
+            <div id="groups"></div>
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal fade" id="addPopUp" tabindex="-1" role="dialog" aria-labelledby="addPopUpTitle" aria-hidden="true">
+    <!-- AÑADIDO ESTE DIV ENTERO-->
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addPopUpTitle">Nueva máquina</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <!-- Este es el formulario que hay que hacer -->
+            <div class="addType">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" data-toggle="collapse" data-target="#vmDatas"
+                  aria-controls="vmDatas" aria-expanded="true" name="exampleRadios" id="inlineVM" value="optionVM"
+                  checked>
+                <label class="form-check-label" for="inlineVM">Virtual Machine</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" data-toggle="collapse" data-target="#vmDatas"
+                  aria-controls="vmDatas" aria-expanded="false" name="exampleRadios" id="inlineGroup" value="optionGroup">
+                <label class="form-check-label" for="inlineGroup">Group</label>
+              </div>
+            </div>
+            <div class="form-group nameAndInput">
+              <label for="inputName">Nombre</label>
+              <div>
+                <input type="text" class="form-control" id="addMachineGroupName" placeholder="Nombre">
+              </div>
+            </div>
+            <div class="form-group nameAndInput">
+              <label for="inputName">Ip</label>
+              <div>
+                <input type="text" class="form-control" id="addMachineGroupIp" placeholder="Ip">
+              </div>
+            </div>
+            <div class="fila">
+
+
+              <div class="columna">
+                <div class="campoCompleto form-group nameAndInput">
+                  <label>RAM</label>
+                  <div>
+                    <input id="addMachineGroupRam" class="campoTexto form-control" type="number" min="1024" max="6144" class="form-control" placeholder="MB">
+                  </div>
+                </div>
+                <div class="campoCompleto form-group nameAndInput">
+                  <label>CPU</label>
+                  <div>
+                    <input id="addMachineGroupCPU" class="campoTexto form-control" type="text" class="form-control" placeholder="%">
+                  </div>
+                </div>
+
+              </div>
+              <div class="columna segundaColumna">
+                <div class="campoCompleto form-group nameAndInput">
+                  <label>Disco</label>
+                  <div>
+                    <input id="addMachineGroupHdd" class="campoTexto form-control" type="number" min="1024" class="form-control" placeholder="MB">
+                  </div>
+                </div>
+                <div class="campoCompleto form-group nameAndInput">
+                  <label>Cores</label>
+                  <div>
+                    <input id="addMachineGroupCores" class="campoTexto form-control" type="text" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group nameAndInput">
+              <label for="inputPath">ISO</label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Elige el archivo...</label>
+              </div>
+            </div>
+            <div class="form-group submitButton">
+              <button id="addMachineOrGroupButton" class="btn btn-primary">FINALIZAR</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="importPopUp" tabindex="-1" role="dialog" aria-labelledby="importPopUpTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="importPopUpTitle">Importar</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group nameAndInput">
+              <label for="inputName">Nombre</label>
+              <div>
+                <input type="text" class="form-control" id="inputName" placeholder="Nombre de la máquina virtual">
+              </div>
+            </div>
+            <div class="form-group nameAndInput">
+              <label for="inputPath">Ruta</label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Elige el archivo...</label>
+              </div>
+            </div>
+
+            <div class="form-group submitButton">
+              <button type="submit" class="btn btn-primary"  onclick="importToJSON()">FINALIZAR</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exportPopUp" tabindex="-1" role="dialog" aria-labelledby="exportPopUpTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exportPopUpTitle">Exportar</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group nameAndInput">
+              <label for="inputName">Nombre</label>
+              <div>
+                <select class="form-control">
+                  <option>Selecciona máquina virtual...</option>
+                  <option>MV1</option>
+                  <option>MV2</option>
+                  <option>MV3</option>
+                  <option>MV4</option>
+                  <option>MV5</option>
+                  <option>MV6</option>
+                  <option>MV11</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group nameAndInput">
+              <label for="inputPath">Ruta</label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFile">
+                <label class="custom-file-label" for="inputGroupFile01">Elige el destino...</label>
+              </div>
+            </div>
+            <div class="form-group submitButton">
+              <button type="submit" class="btn btn-primary" onclick="exportToJSON()">FINALIZAR</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="addToGroup" tabindex="-1" role="dialog" aria-labelledby="addToGroupTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered customDialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addToGroupTitle">Añadir a </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="addToGroupClose">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="addToGroupContainer">
+            <div class="itemsList addToGroupColumn">
+              <form class="search" id="addToGroupForm">
+                <input type="hidden" id="groupId">
+                <input type="text" class="form-control" id="addToGroupInput" placeholder="Buscar" required>
+              <div class="addType">
+
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" data-toggle="collapse" data-target="#vmDatas"
+                    aria-controls="vmDatas" aria-expanded="true" name="addToGroupRadio" id="inlineVM" value="optionVM"
+                    checked>
+                  <label class="form-check-label" for="inlineVM">Virtual Machine</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" data-toggle="collapse" data-target="#vmDatas"
+                    aria-controls="vmDatas" aria-expanded="false" name="addToGroupRadio" id="inlineGroup" value="optionGroup">
+                  <label class="form-check-label" for="inlineGroup">Group</label>
+                </div>
+              </div>
+              </form>
+              <div class="contents" id="addToGroupItems">
+              </div>
+
+
+            </div>
+            <div class="itemsAdded addToGroupColumn">
+              <h6 class="titleCenter">Añadido</h6>
+              <div class="contents" id="addedToGroupItems">
+
+                </div>
+                <div class="form-group addToGroupExit">
+                  <button class="btn btn-primary" id="addToGroupSubmit" data-dismiss="modal" aria-label="Close">Salir</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="js/jquery-3.3.1.slim.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>

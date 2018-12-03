@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <title>VmToolkit</title>
+  </head>
+  <body>
+
+  <!-- PRACTICA 6.2: tu contenido aqui -->
+    
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+            <input id="apikey_input" class="form-control mr-sm-2" type="number" placeholder="apiKey">
+            <button id="apikey_button"  class="btn btn-outline-success my-2 my-sm-0" type="submit">Change</button>
+            </form>
+        </div>
+        </nav>
+    
+    <!--- vista principal, en 3 columnas --->
+    
+        <div class="container">
+        <div class="row">
+
+
+            <div class="col-sm-3">                
+            <h3>Grupos</h3>
+            <ul id="grupos" class="list-group ordenable">
+                <li id="grp_a" class="list-group-item d-flex justify-content-between align-items-center">
+                    a
+                    <span class="badge badge-primary badge-pill">14</span>
+                </li>
+                <li id="grp_b" class="list-group-item d-flex justify-content-between align-items-center">
+                    b
+                    <span class="badge badge-primary badge-pill">2</span>
+                </li>
+                <li id="grp_c" class="list-group-item d-flex justify-content-between align-items-center">
+                    c
+                    <span class="badge badge-primary badge-pill">1</span>
+                </li>
+            </ul>
+            </div>
+            
+
+            <div class="col-sm-3">
+            <h3>Máquinas</h3>            
+            <ul id="maquinas" class="list-group ordenable">
+                    <li id="vm_x" class="list-group-item d-flex justify-content-between align-items-center">
+                        x
+                        <span class="badge badge-primary badge-pill">14</span>
+                    </li>
+                    <li id="vm_y" class="list-group-item d-flex justify-content-between align-items-center">
+                       y
+                        <span class="badge badge-primary badge-pill">2</span>
+                    </li>
+                    <li id="vm_z" class="list-group-item d-flex justify-content-between align-items-center">
+                        z
+                        <span class="badge badge-warning badge-pill">1</span>                    
+                    </li>
+                </ul>        
+            </div>
+            
+            <div class="col-sm-6">
+            <h3>Formularios</h3>
+
+                <div>
+                <form id="initializeForm">
+                <div class="form-group">
+                    <label for="palindrome_input">Escribe palindromo</label>
+                    <input type="text" class="form-control" id="palindrome_input" 
+                        placeholder="Favorite color" required="" data-parsley-palindrome="">
+                </div>
+                <button type="submit" class="btn btn-primary">Añadir datos de ejemplo</button>
+                </form>              
+                </div>          
+
+                <hr/>
+
+                <div>
+                <form id="addForm">
+                    <div class="form-group">
+                    <input type="text" class="form-control" id="addName"
+                            placeholder="Nombre de nueva VM o grupo" required="" data-parsley-newname="">
+                    </div>                                  
+                    <button id="addvm_button" class="btn btn-primary">Añadir VM</button>
+                    <button id="addgroup_button" class="btn btn-secondary">Añadir Grupo</button>
+                </form>                           
+                </div>               
+
+                <hr/>
+
+                <div>
+                <form id="rmForm">
+                    <div class="form-group">
+                    <input type="text" class="form-control" id="rmName"
+                            placeholder="Nombre de VM o grupo existente" required="" data-parsley-oldname="">
+                    </div>          
+                    <button id="rm_button" class="btn btn-primary">Eliminar</button>
+                </form>                           
+                </div>                
+            </div>
+        </div>
+    </div>    
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.3.1.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Drag & drop -->
+    <script src="js/jquery-ui.min.js"></script>
+    <!-- Validation -->
+    <script src="js/parsley.min.js"></script>
+    
+    <!-- Behaviors & bindings between UI and server API -->
+    <script type="module" src="js/vt.js"></script>
+  </body>
+</html>
