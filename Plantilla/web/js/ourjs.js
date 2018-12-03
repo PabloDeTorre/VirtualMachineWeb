@@ -191,6 +191,42 @@ function prepareGroups() {
     });
 }
 
+
+
+function exportToJSON(){
+    let id = document.getElementById("inputName");
+    let item = getItem(id);
+    const fs = require('fs')
+    
+    let text = '{"'+ item.id +'" : ['+
+        '{ "ip":"'+item.ip+'"},'+
+        '{ "name":"'+item.name+'"},'+
+        '{ "cores":"'+item.cores+'"},'+
+        '{ "cpu":"'+item.cpu+'"},'+
+        '{ "disc":"'+item.disc+'"},'+
+        '{ "ram":"'+item.ram+'"} ]}';
+
+        jsonnn.writeFile('./data.json', text, (err) => {
+            if (err) {
+                console.error(err);
+                return;
+            };
+            console.log("File has been created");
+        });
+}
+
+
+
+function importToJSON(){
+    let id = document.getElementById("inputName");
+    let item = getItem(id);
+    let lugar = document.getElementById("inputName");
+    let json = require(lugar); 
+    var obj = JSON.parse(json);
+    item = obj;
+
+}
+
 function getName(id) {
     for(let v in machines) {
         if(machines[v].id == id)
