@@ -412,7 +412,8 @@ $(function () {
             $('.machine').hide();
             for (let index = 0; index < $('.group').length; index++) {
                 var gId = $('.group')[index].id.slice(10);
-                if (gId === actualGroup.id || ($("#addToGroupInput").val().length > 0 && !gId.includes($("#addToGroupInput").val())) || actualGroup.elements.indexOf(mId) > -1) {
+                var gName = getItem(gId).name;
+                if (gId === actualGroup.id || ($("#addToGroupInput").val().length > 0 && !gId.includes($("#addToGroupInput").val())) || actualGroup.elements.indexOf(gName) > -1) {
                     $("#addTogroup" + gId).hide();
                 }
                 else {
