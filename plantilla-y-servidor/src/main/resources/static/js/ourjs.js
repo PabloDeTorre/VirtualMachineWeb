@@ -76,17 +76,50 @@ $(function () {
         $(".addToGroupButton").click(function (e) {
             openAddToGroupModal(e.currentTarget.id);
         });
-        $(".quitMVButton").click(function(e){
+        $(".quitMVButton").click(function (e) {
             var groupName = getItem(e.currentTarget.classList[1]).name;
             Vt.unlink(url, [getItem(e.currentTarget.id).name], groupName).then(r => update(r));
         });
+        $(".itemGroup").on("drop", function (e) {
+            this.style.border = "0";
+            e.preventDefault();
+            if($("#dragAndDropId").val() != this.id){
+                var item = getItem(this.id);
+                if(item.elements.indexOf(getItem($("#dragAndDropId").val()).name) < 0){
+                    Vt.link(url, [getItem($("#dragAndDropId").val()).name], item.name).then(r => {
+                        update(r);
+                        console.log("Elemento añadido");
+                    });
+                } else{
+                    console.log("Este elemento ya existe en el grupo");
+                }
+            }
+        });
+        $(".itemGroup").on("dragover", function (e) {
+            e.preventDefault();
+            this.style.border = "2px dashed black";
+        });
+        $(".itemGroup").on("dragleave", function (e) {
+            e.preventDefault();
+            this.style.border = "0";
+        });
+        $(".item").on("dragstart", function (e) {
+            this.style.opacity = '0.4';
+            $("#dragAndDropId").val(this.id);
+        })
+        $(".item").on("dragend", function (e) {
+            this.style.opacity = '1';
+        })
+
+
     }
+
     function prepareMachines(machines) {
         $("#machines").html("");
         machines.forEach(v => {
             let tag = "machine" + v.id;
             $("#machines").append('\
-        <div class="card" draggable="true">\
+        <div class="card item" draggable="true" id="' + v.id + '">\
             <div class="card-header" id="headingMachine' + v.id + '">\
                 <span class="draggableIndicator">.</span>\
                 <h5 class="mb-0"><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#' + tag + '" aria-controls="' + tag + '">' + v.name + '</button>\
@@ -145,7 +178,7 @@ $(function () {
         $("#groups").html("");
         groups.forEach(g => {
             let group = '';
-            group += '<div class="card" draggable="true">' +
+            group += '<div class="card item itemGroup" draggable="true" id="' + g.id + '">' +
                 '<div class="card-header" id="headingGroup' + g.id + '">' +
                 '<span class="draggableIndicator">.</span>' +
                 '<h5 class="mb-0">' +
@@ -297,7 +330,7 @@ $(function () {
         var item = '<div class="card ' + type + '" id="' + i.id + '">' +
             '<div class="card-header" id="heading' + i.id + '">' +
             '<h5 class="mb-0">' +
-            '<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#' + i.id + '"aria-controls="' + i.id + '">' +
+            '<button class="btn btn-link" type="button" ' + i.id + '"aria-controls="' + i.id + '">' +
             i.name +
             '</button>' +
             '<div class="actionIcons">' +
@@ -315,7 +348,7 @@ $(function () {
         var item = '<div class="card" id="' + i.id + '">' +
             '<div class="card-header" id="heading' + i.id + '">' +
             '<h5 class="mb-0">' +
-            '<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#' + i.id + '"aria-controls="' + i.id + '">' +
+            '<button class="btn btn-link" type="button" ' + i.id + '"aria-controls="' + i.id + '">' +
             i.name +
             '</button>' +
             '<div class="actionIcons">' +
@@ -346,7 +379,6 @@ $(function () {
         var value = $('input[name=addToGroupRadio]:checked', '#addToGroupForm').val();
 
         var actualGroup = getItem($('#groupId').val());
-
         if (value === "optionVM") {
             $(".group").hide();
             for (let index = 0; index < $('.machine').length; index++) {
@@ -364,23 +396,17 @@ $(function () {
         }
         else {
             $('.machine').hide();
-            if ($("#addToGroupInput").val().length > 0) {
-                for (let index = 0; index < $('.group').length; index++) {
-                    var gId = $('.group')[index].id;
-                    if (gId === actualGroup ||
-                        !gId.includes($("#addToGroupInput").val()) ||
-                        actualGroup.elements.indexOf(mId) > -1) {
-                        $("#" + gId).hide();
-                    }
-                    else {
-                        $("#" + gId).show();
-                    }
+            for (let index = 0; index < $('.group').length; index++) {
+                var gId = $('.group')[index].id;
+                if (gId === actualGroup.id || ($("#addToGroupInput").val().length > 0 && !gId.includes($("#addToGroupInput").val())) || actualGroup.elements.indexOf(mId) > -1) {
+                    $("#" + gId).hide();
+                }
+                else {
+                    $("#" + gId).show();
                 }
             }
-            else {
-                $('.group').show();
-            }
         }
+
     }
     function fillAddedItems(g) {
         //Clear items

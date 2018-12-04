@@ -3,7 +3,13 @@
     background-color: #c9daf8ff;
 
 }
-
+.hidden{
+    opacity: 0;
+    height: 0;
+}
+.dragover{
+    border: 2px dashed black;
+}
 .topMenu button{
     width: 120px;
     padding: 1px 6px;
