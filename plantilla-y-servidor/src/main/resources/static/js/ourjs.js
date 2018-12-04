@@ -509,6 +509,7 @@ $(function () {
     function showAddOrGroupType() {
         var value = $('input[name=addRadio]:checked', '#addForm').val();
         if (value == "optionVM") {
+            $("#addPopUpTitle").html("Nueva máquina");
             $("#addMachineGroupRam").parent().parent().show();
             $("#addMachineGroupHdd").parent().parent().show();
             $("#addMachineGroupCPU").parent().parent().show();
@@ -523,6 +524,7 @@ $(function () {
             $("#addMachineGroupIp").attr("required", true);
         }
         else {
+            $("#addPopUpTitle").html("Nuevo grupo");
             $("#addMachineGroupRam").parent().parent().hide();
             $("#addMachineGroupHdd").parent().parent().hide();
             $("#addMachineGroupCPU").parent().parent().hide();
