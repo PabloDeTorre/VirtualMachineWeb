@@ -1,31 +1,30 @@
 import * as Vt from './vtapi.js';
 
-$(document).ready(function () {
+function handleResult(result, successFn, errorFn) {
+    console.log("result: ", result)
+    if (result.error) {
+        // error, .message nos indicará el problema
+        errorFn(result.message);
+    } else {
+        successFn(result);
+    }
+}
+
+$(function () {
     // cambia esto a http://localhost:8000 si decides lanzar tú el servidor (vía mvn spring-boot:run)
     const apiServer = 'http://gin.fdi.ucm.es:8080/';
 
     // aqui guardaremos siempre el estado de la aplicacion, por ejemplo para verificar si 
     // los nombres de vms existen o no; ver update(r)
     let state = { vms: [], groups: [] };
+    let maquinasAñadir = [];
+    let maquinasQuitar = [];
 
     let url = apiServer + "314161";
     console.log(url);
 
     // actualiza la visualizacion
-    Vt.list(url).then(r => {
-        console.log(state);
-        update(r);
-
-        $(".editButton").click(function (e) {
-            openEditModal(e);
-        });
-        $(".power-button").click(function (e) {
-            setState(e.currentTarget.id, e.currentTarget.lastChild);
-        });
-        $(".deleteButton").click(function(e){
-            removeItem(e.currentTarget.id);
-        })
-    });
+    Vt.list(url).then(r => update(r));
 
     $(".close").click(function () {
 
@@ -39,14 +38,48 @@ $(document).ready(function () {
     $("#addForm").change(function () {
         showAddOrGroupType();
     });
-    function update(r) {
-        state = r;
-        addIdParam();
-        state.vms.sort(sortByName);
-        state.groups.sort(sortByName);
-        prepareMachines(state.vms);
-        prepareGroups(state.groups);
-        
+    function update(result) {
+        handleResult(result,
+            r => {
+                state = r;
+                console.log("New state: ", state);
+                try {
+                    addIdParam();
+                    state.vms.sort(sortByName);
+                    state.groups.sort(sortByName);
+                    prepareMachines(state.vms);
+                    prepareGroups(state.groups);
+                    addListeners();
+                } catch (e) {
+                    console.log(e);
+                }
+            },
+            m => console.log("BUAAAAA - ", m))
+    }
+    function addListeners() {
+        $(".editButton").click(function (e) {
+            openEditModal(e);
+        });
+        $(".power-button").click(function (e) {
+            setState(e.currentTarget.id, e.currentTarget.lastChild.data);
+            if (e.currentTarget.lastChild.data === "Reiniciar") {
+                console.log("hola");
+                setTimeout(() => {
+                    setState(e.currentTarget.id, "start");
+                }, 1200);
+            }
+
+        });
+        $(".deleteButton").click(function (e) {
+            removeItem(e.currentTarget.id);
+        });
+        $(".addToGroupButton").click(function (e) {
+            openAddToGroupModal(e.currentTarget.id);
+        });
+        $(".quitMVButton").click(function(e){
+            var groupName = getItem(e.currentTarget.classList[1]).name;
+            Vt.unlink(url, [getItem(e.currentTarget.id).name], groupName).then(r => update(r));
+        });
     }
     function prepareMachines(machines) {
         $("#machines").html("");
@@ -120,24 +153,24 @@ $(document).ready(function () {
                 g.name +
                 '</button>' +
                 '<div class="actionIcons">' +
-                '<img src="./img/addToGroup.png" class="addToGroup" data-target="#addToGroup" data-toggle="modal" data-placement="bottom" title="Añadir" onclick=openAddToGroupModal("' + g.id + '")>' +
-                '<img src="./img/delete.png" class="deleteButton" id="'+ g.id + '" data-toggle="tooltip" data-placement="bottom" title="Eliminar">' +
+                '<img src="./img/addToGroup.png" id="' + g.id + '" class="addToGroupButton" data-target="#addToGroup" data-toggle="modal" data-placement="bottom" title="Añadir">' +
+                '<img src="./img/delete.png" class="deleteButton" id="' + g.id + '" data-toggle="tooltip" data-placement="bottom" title="Eliminar">' +
                 '</div>' +
                 '</h5>' +
                 '</div>' +
                 '<div id="group' + g.id + '" class="collapse" aria-labelledby="headingGroup' + g.id + '" data-parent="#accordionExample">' +
                 '<div class="card-body">';
-            for (let v in g.vms) {
-                let vName = getName(g.vms[v]);
+            for (let v in g.elements) {
+                let vName = getItemByName(g.elements[v]);
                 if (vName)
                     group += '<div class="card">' +
-                        '<div class="card-header" id="headingMachine' + g.vms[v] + '">' +
+                        '<div class="card-header" id="headingMachine' + vName.id + '">' +
                         '<h5 class="mb-0">' +
-                        '<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine' + g.vms[v] + '" aria-controls="machine' + g.vms[v] + '">' +
-                        vName +
+                        '<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#machine' + vName.id + '" aria-controls="machine' + vName.id + '">' +
+                        vName.name +
                         '</button>' +
                         '<div class="actionIcons">' +
-                        '<img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Sacar del grupo">' +
+                        '<img src="./img/quit.png" id="' + vName.id + '" class="quitMVButton ' + g.id + '" data-toggle="tooltip" data-placement="bottom" title="Sacar del grupo">' +
                         '</div>' +
                         '</h5>' +
                         '</div></div>';
@@ -207,15 +240,29 @@ $(document).ready(function () {
         }
         return null;
     }
+    function getItemByName(name) {
+        var machines = state.vms;
+        for (let v in machines) {
+            if (machines[v].name == name)
+                return machines[v];
+        }
+        var groups = state.groups;
+        for (let g in groups) {
+            if (groups[g].name == name)
+                return groups[g];
+        }
+        return null;
+    }
     function openAddToGroupModal(groupId) {
+        var item = getItem(groupId);
         $("#groupId").val(groupId);
         console.log('valeu', $('#groupId').val());
 
-        $('#addToGroupTitle').html("Añadir a " + getName(groupId));
+        $('#addToGroupTitle').html("Añadir a " + item.name);
         $("#addToGroupItems").html('');
-        renderNotAddedList(machines, groups);
+        renderNotAddedList(state.vms, state.groups);
 
-        fillAddedItems(groups);
+        fillAddedItems(getItem(groupId));
 
         $("#addToGroupForm").change(function () {
             showAddToGroupType();
@@ -224,19 +271,37 @@ $(document).ready(function () {
             showAddToGroupType();
         });
         $('#addToGroupSubmit').click(function () {
-            prepareMachines();
-            prepareGroups();
+            var item = getItem(groupId);
+            console.log("grupos", item.elements);
+
+            console.log(maquinasQuitar, maquinasAñadir);
+            Vt.unlink(url, maquinasQuitar, item.name).then(r => update(r));
+            Vt.link(url, maquinasAñadir, item.name).then(r => {
+                update(r);
+            });
+
+            maquinasAñadir = [];
+            maquinasQuitar = [];
+
+
         });
+        $(".addItemToGroup").click(function (e) {
+            addItemToGroup(e.currentTarget.id);
+        });
+        $(".delItemToGroup").click(function (e) {
+            delItemToGroup(e.currentTarget.id);
+        });
+
     }
-    function renderNotAddedItem(id, type) {
-        var item = '<div class="card ' + type + '" id="' + id + '">' +
-            '<div class="card-header" id="heading' + id + '">' +
+    function renderNotAddedItem(i, type) {
+        var item = '<div class="card ' + type + '" id="' + i.id + '">' +
+            '<div class="card-header" id="heading' + i.id + '">' +
             '<h5 class="mb-0">' +
-            '<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#' + id + '"aria-controls="' + id + '">' +
-            getName(id) +
+            '<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#' + i.id + '"aria-controls="' + i.id + '">' +
+            i.name +
             '</button>' +
             '<div class="actionIcons">' +
-            '<img src="./img/addToGroup.png" data-toggle="tooltip" data-placement="bottom" title="Añadir" onclick=addItemToGroup("' + id + '")>' +
+            '<img src="./img/addToGroup.png" id="' + i.id + '" class="addItemToGroup" data-toggle="tooltip" data-placement="bottom" title="Añadir"' +
             '</div>' +
             '</h5>' +
             '</div>' +
@@ -246,15 +311,15 @@ $(document).ready(function () {
         return item;
     }
 
-    function renderAddedItem(id) {
-        var item = '<div class="card" id="' + id + '">' +
-            '<div class="card-header" id="heading' + id + '">' +
+    function renderAddedItem(i) {
+        var item = '<div class="card" id="' + i.id + '">' +
+            '<div class="card-header" id="heading' + i.id + '">' +
             '<h5 class="mb-0">' +
-            '<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#' + id + '"aria-controls="' + id + '">' +
-            getName(id) +
+            '<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#' + i.id + '"aria-controls="' + i.id + '">' +
+            i.name +
             '</button>' +
             '<div class="actionIcons">' +
-            '<img src="./img/quit.png" data-toggle="tooltip" data-placement="bottom" title="Quitar" onclick=delItemToGroup("' + id + '")>' +
+            '<img src="./img/quit.png" id="' + i.id + '" class="delItemToGroup" data-toggle="tooltip" data-placement="bottom" title="Quitar"' +
             '</div>' +
             '</h5>' +
             '</div>' +
@@ -263,13 +328,14 @@ $(document).ready(function () {
         return item;
     }
     function renderNotAddedList(machines, groups) {
+        console.log(machines, groups);
         var groupsHtml = "";
         groups.forEach(g => {
-            groupsHtml += renderNotAddedItem(g.id, 'group');
+            groupsHtml += renderNotAddedItem(g, 'group');
         });
         var machinesHtml = "";
         machines.forEach(m => {
-            machinesHtml += renderNotAddedItem(m.id, 'machine');
+            machinesHtml += renderNotAddedItem(m, 'machine');
         });
         $("#addToGroupItems").append(groupsHtml);
         $("#addToGroupItems").append(machinesHtml);
@@ -280,11 +346,13 @@ $(document).ready(function () {
         var value = $('input[name=addToGroupRadio]:checked', '#addToGroupForm').val();
 
         var actualGroup = getItem($('#groupId').val());
+
         if (value === "optionVM") {
             $(".group").hide();
             for (let index = 0; index < $('.machine').length; index++) {
-                var mId = getName($('.machine')[index].id);
-                if (($("#addToGroupInput").val().length > 0 && !mId.includes($("#addToGroupInput").val())) || actualGroup.vms.indexOf(mId) > -1) {
+                var mId = $('.machine')[index].id;
+                var mName = getItem(mId).name;
+                if (($("#addToGroupInput").val().length > 0 && !mId.includes($("#addToGroupInput").val())) || actualGroup.elements.indexOf(mName) > -1) {
                     $("#" + mId).hide();
                 }
                 else {
@@ -299,7 +367,9 @@ $(document).ready(function () {
             if ($("#addToGroupInput").val().length > 0) {
                 for (let index = 0; index < $('.group').length; index++) {
                     var gId = $('.group')[index].id;
-                    if (!gId.includes($("#addToGroupInput").val())) {
+                    if (gId === actualGroup ||
+                        !gId.includes($("#addToGroupInput").val()) ||
+                        actualGroup.elements.indexOf(mId) > -1) {
                         $("#" + gId).hide();
                     }
                     else {
@@ -312,49 +382,54 @@ $(document).ready(function () {
             }
         }
     }
-    function fillAddedItems(groups) {
+    function fillAddedItems(g) {
         //Clear items
         $("#addedToGroupItems").html('');
 
-        var id = $('#groupId').val();
-        console.log(id);
         var addedMvs = "";
-        groups.forEach(g => {
-            if (g.id === id) {
-                console.log(g.vms);
-                g.vms.forEach(vm => {
-                    addedMvs += renderAddedItem(vm);
+        if (g.elements.length > 0) {
+            g.elements.forEach(vm => {
+                addedMvs += renderAddedItem(getItemByName(vm));
 
-                    var vmname = "#" + vm;
-                    $(vmname).hide();
-                });
-            }
-        });
+                var vmid = "#" + getItemByName(vm).id;
+                console.log(vmid);
+                $(vmid).hide();
+            });
+        }
         $("#addedToGroupItems").append(addedMvs);
 
     }
     function addItemToGroup(machineId) {
         var idFather = $('#groupId').val();
-        console.log(machineId);
-        groups.forEach(g => {
-            var auxName = g.name.replace(/\s/g, '');
-            if (g.id === idFather) {
-                g.vms.push(machineId);
-            }
-        });
-        fillAddedItems(groups);
+        var g = getItem(idFather);
+        if (g.elements.indexOf(getItem(machineId).name) < 0) {
+            g.elements.push(getItem(machineId).name);
+            maquinasAñadir.push(getItem(machineId).name);
+
+        } else {
+            maquinasAñadir.splice(maquinasAñadir.indexOf(getItem(machineId).name), 1);
+        }
+        fillAddedItems(g);
+        console.log(g);
     }
     function delItemToGroup(machineId) {
         var idFather = $('#groupId').val();
         console.log(machineId);
-        groups.forEach(g => {
-            var auxName = g.name.replace(/\s/g, '');
-            if (g.id === idFather && g.vms.indexOf(machineId) > -1) {
-                g.vms.splice(g.vms.indexOf(machineId), 1);
-            }
+        var g = getItem(idFather);
+        if (g.elements.indexOf(getItem(machineId).name) > -1) {
+            g.elements.splice(g.elements.indexOf(getItem(machineId).name), 1);
+            maquinasQuitar.push(getItem(machineId).name);
+        } else {
+            maquinasQuitar.splice(maquinasQuitar.indexOf(getItem(machineId).name), 1);
+        }
+        fillAddedItems(g);
+    }
+    function deleteRepeated(array) {
+        var uniqueNames = [];
+        $.each(array, function (i, el) {
+            if ($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
         });
-        fillAddedItems(groups);
-        showAddToGroupType();
+        return uniqueNames;
     }
     function addMachineOrGroup() {
         var value = $('input[name=addRadio]:checked', '#addForm').val();
@@ -363,7 +438,6 @@ $(document).ready(function () {
         }
         if (value == "optionVM") {
 
-            debugger;
             const sampleParams = new Vt.Params(
                 $("#addMachineGroupName").val(),
                 parseInt($("#addMachineGroupRam").val()),
@@ -475,7 +549,7 @@ $(document).ready(function () {
     }
     function setState(id, state) {
         var item = getItem(id);
-        switch (state.data) {
+        switch (state) {
             case "Encender":
                 state = "start";
                 break;
@@ -504,7 +578,7 @@ $(document).ready(function () {
         );
         console.log(params);
         Vt.set(url, params, [item.name]).then(r => update(r));
-        location.reload();
+
     }
     function buttonDisabled(id, buttonState) {
         var item = getItem(id);
@@ -525,7 +599,7 @@ $(document).ready(function () {
                 }
                 break;
             case "restart":
-                if (buttonState == "suspend" || buttonState == "restart" || buttonState == "start") {
+                if (buttonState == "stop" || buttonState == "suspend" || buttonState == "restart" || buttonState == "start") {
                     return "disabled";
                 }
                 break;
@@ -539,7 +613,6 @@ $(document).ready(function () {
     }
     function removeItem(id) {
         Vt.rm(url, [getItem(id).name]).then(r => update(r));
-        location.reload();
     }
 
     //
