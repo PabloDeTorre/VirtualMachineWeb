@@ -30,9 +30,12 @@
     width: 200px;
     color: black;
 }
-.submitButton>.cancelar{
+.cancelar{
     background-color: red;
-    border-color: black;
+}
+.cancelar:hover{
+    background-color: darkred;
+    
 }
 .addToGroupExit{
     position: absolute;

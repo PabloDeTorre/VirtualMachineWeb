@@ -321,10 +321,13 @@ $(function () {
         });
         $('#addToGroupSubmit').click(function () {
             var item = getItem(groupId);
-            Vt.unlink(url, maquinasQuitar, item.name).then(r => update(r));
-            Vt.link(url, maquinasAñadir, item.name).then(r => {
-                update(r);
-            });
+            console.log(item, maquinasQuitar, maquinasAñadir);
+            Vt.link(url, maquinasAñadir, item.name).then(r => update(r));
+            if(maquinasQuitar.length > 0){
+               Vt.unlink(url, maquinasQuitar, item.name).then(r => update(r)); 
+            }
+            
+            
 
             maquinasAñadir = [];
             maquinasQuitar = [];
@@ -340,7 +343,7 @@ $(function () {
 
     }
     function renderNotAddedItem(i, type) {
-        var item = '<div class="card ' + type + '" id="' + i.id + '">' +
+        var item = '<div class="card ' + type + '" id="addTogroup' + i.id + '">' +
             '<div class="card-header" id="heading' + i.id + '">' +
             '<h5 class="mb-0">' +
             '<button class="btn btn-link" type="button" ' + i.id + '"aria-controls="' + i.id + '">' +
@@ -358,7 +361,7 @@ $(function () {
     }
 
     function renderAddedItem(i) {
-        var item = '<div class="card" id="' + i.id + '">' +
+        var item = '<div class="card" id="addedTogroup' + i.id + '">' +
             '<div class="card-header" id="heading' + i.id + '">' +
             '<h5 class="mb-0">' +
             '<button class="btn btn-link" type="button" ' + i.id + '"aria-controls="' + i.id + '">' +
@@ -389,18 +392,17 @@ $(function () {
     }
     function showAddToGroupType() {
         var value = $('input[name=addToGroupRadio]:checked', '#addToGroupForm').val();
-
         var actualGroup = getItem($('#groupId').val());
         if (value === "optionVM") {
             $(".group").hide();
             for (let index = 0; index < $('.machine').length; index++) {
-                var mId = $('.machine')[index].id;
+                var mId = $('.machine')[index].id.slice(10);
                 var mName = getItem(mId).name;
                 if (($("#addToGroupInput").val().length > 0 && !mId.includes($("#addToGroupInput").val())) || actualGroup.elements.indexOf(mName) > -1) {
-                    $("#" + mId).hide();
+                    $("#addTogroup" + mId).hide();
                 }
                 else {
-                    $("#" + mId).show();
+                    $("#addTogroup" + mId).show();
                 }
             }
 
@@ -409,12 +411,12 @@ $(function () {
         else {
             $('.machine').hide();
             for (let index = 0; index < $('.group').length; index++) {
-                var gId = $('.group')[index].id;
+                var gId = $('.group')[index].id.slice(10);
                 if (gId === actualGroup.id || ($("#addToGroupInput").val().length > 0 && !gId.includes($("#addToGroupInput").val())) || actualGroup.elements.indexOf(mId) > -1) {
-                    $("#" + gId).hide();
+                    $("#addTogroup" + gId).hide();
                 }
                 else {
-                    $("#" + gId).show();
+                    $("#addTogroup" + gId).show();
                 }
             }
         }
@@ -429,11 +431,16 @@ $(function () {
             g.elements.forEach(vm => {
                 addedMvs += renderAddedItem(getItemByName(vm));
 
-                var vmid = "#" + getItemByName(vm).id;
-                $(vmid).hide();
+                var vmid = "#addTogroup" + getItemByName(vm).id;
+                //$(vmid).hide();
             });
         }
         $("#addedToGroupItems").append(addedMvs);
+        $(".delItemToGroup").click(function (e) {
+            delItemToGroup(e.currentTarget.id);
+        });
+        showAddToGroupType();
+
 
     }
     function addItemToGroup(machineId) {
@@ -454,8 +461,6 @@ $(function () {
         if (g.elements.indexOf(getItem(machineId).name) > -1) {
             g.elements.splice(g.elements.indexOf(getItem(machineId).name), 1);
             maquinasQuitar.push(getItem(machineId).name);
-        } else {
-            maquinasQuitar.splice(maquinasQuitar.indexOf(getItem(machineId).name), 1);
         }
         fillAddedItems(g);
     }
