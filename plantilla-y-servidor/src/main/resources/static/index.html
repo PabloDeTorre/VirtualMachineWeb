@@ -269,23 +269,23 @@
           </button>
         </div>
         <div class="modal-body">
-          <form class="form-horizontal">
+          <form class="form-horizontal" id="importForm">
             <div class="form-group nameAndInput">
               <label for="inputName">Nombre</label>
               <div>
-                <input type="text" class="form-control" id="inputName" placeholder="Nombre de la máquina virtual">
+                <input type="text" class="form-control" id="inputimportName" data-parsley-name="" placeholder="Nombre de la máquina virtual" required>
               </div>
             </div>
             <div class="form-group nameAndInput">
               <label for="inputPath">Ruta</label>
               <div class="custom-file">
-                <input type="file" class="custom-file-input" id="customFile">
-                <label class="custom-file-label" for="customFile">Elige el archivo...</label>
+                <input type="file" class="custom-file-input" id="fileinput" accept=".json" required>
+                <label class="custom-file-label" for="fileinput">Elige el archivo...</label>
               </div>
             </div>
 
             <div class="form-group submitButton">
-              <button type="submit" class="btn btn-primary" onclick="importToJSON()">IMPORTAR</button>
+              <button id="importSubmitButton" class="btn btn-primary">IMPORTAR</button>
             </div>
           </form>
         </div>
@@ -307,27 +307,13 @@
             <div class="form-group nameAndInput">
               <label for="inputName">Nombre</label>
               <div>
-                <select class="form-control">
-                  <option>Selecciona máquina virtual...</option>
-                  <option>MV1</option>
-                  <option>MV2</option>
-                  <option>MV3</option>
-                  <option>MV4</option>
-                  <option>MV5</option>
-                  <option>MV6</option>
-                  <option>MV11</option>
+                <select id="exportName" class="form-control">
+                  
                 </select>
               </div>
             </div>
-            <div class="form-group nameAndInput">
-              <label for="inputPath">Ruta</label>
-              <div class="custom-file">
-                <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFile">
-                <label class="custom-file-label" for="inputGroupFile01">Elige el destino...</label>
-              </div>
-            </div>
             <div class="form-group submitButton">
-              <button type="submit" class="btn btn-primary" onclick="exportToJSON()">EXPORTAR</button>
+              <button type="submit" id="exportButton" class="btn btn-primary">EXPORTAR</button>
             </div>
           </form>
         </div>

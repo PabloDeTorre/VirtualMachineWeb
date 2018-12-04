@@ -38,6 +38,26 @@ $(function () {
     $("#addForm").change(function () {
         showAddOrGroupType();
     });
+    $("#importSubmitButton").click(function () {
+        var file, fr, myFile;
+        myFile = document.getElementById('fileinput');
+        file = myFile.files[0];
+        fr = new FileReader();
+        fr.onload = function (e) {
+            var newItem = JSON.parse(e.target.result);
+            const sampleParams = new Vt.Params(
+                $("#inputimportName").val(),
+                parseInt(newItem.ram),
+                parseInt(newItem.hdd),
+                parseInt(newItem.cpu),
+                parseInt(newItem.cores),
+                newItem.ip
+            );
+            Vt.add(url, sampleParams).then(r => update(r));
+            Vt.add(url, sampleParams).then(r => update(r));
+        };
+        fr.readAsText(file);
+    });
     function update(result) {
         handleResult(result,
             r => {
@@ -63,7 +83,6 @@ $(function () {
         $(".power-button").click(function (e) {
             setState(e.currentTarget.id, e.currentTarget.lastChild.data);
             if (e.currentTarget.lastChild.data === "Reiniciar") {
-                console.log("hola");
                 setTimeout(() => {
                     setState(e.currentTarget.id, "start");
                 }, 1200);
@@ -83,14 +102,14 @@ $(function () {
         $(".itemGroup").on("drop", function (e) {
             this.style.border = "0";
             e.preventDefault();
-            if($("#dragAndDropId").val() != this.id){
+            if ($("#dragAndDropId").val() != this.id) {
                 var item = getItem(this.id);
-                if(item.elements.indexOf(getItem($("#dragAndDropId").val()).name) < 0){
+                if (item.elements.indexOf(getItem($("#dragAndDropId").val()).name) < 0) {
                     Vt.link(url, [getItem($("#dragAndDropId").val()).name], item.name).then(r => {
                         update(r);
                         console.log("Elemento añadido");
                     });
-                } else{
+                } else {
                     console.log("Este elemento ya existe en el grupo");
                 }
             }
@@ -110,10 +129,41 @@ $(function () {
         $(".item").on("dragend", function (e) {
             this.style.opacity = '1';
         })
-
-
+        $(".export").click(function () {
+            prepareExport();
+        })
+        $("#exportButton").click(function() {
+            var name = $("#exportName").val();
+            download(name+".json", JSON.stringify(getItemByName(name)));
+            Vt.vtexport(url, name).then(r => update(r));
+            
+        })
     }
 
+    function prepareExport() {
+        var names = "";
+        var machines = state.vms;
+        for (let v in machines) {
+            names += "<option value='" + machines[v].name + "'>" + machines[v].name + "</option>";
+        }
+        var groups = state.groups;
+        for (let g in groups) {
+            names += "<option value='" + groups[g].name + "'>" + groups[g].name + "</option>";
+        }
+        $("#exportName").append(names);
+    }
+    function download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:json;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+      
+        element.style.display = 'none';
+        document.body.appendChild(element);
+      
+        element.click();
+      
+        document.body.removeChild(element);
+      }
     function prepareMachines(machines) {
         $("#machines").html("");
         machines.forEach(v => {
@@ -215,39 +265,6 @@ $(function () {
 
 
 
-    function exportToJSON() {
-        let id = document.getElementById("inputName");
-        let item = getItem(id);
-        const fs = require('fs')
-
-        let text = '{"' + item.id + '" : [' +
-            '{ "ip":"' + item.ip + '"},' +
-            '{ "name":"' + item.name + '"},' +
-            '{ "cores":"' + item.cores + '"},' +
-            '{ "cpu":"' + item.cpu + '"},' +
-            '{ "disc":"' + item.disc + '"},' +
-            '{ "ram":"' + item.ram + '"} ]}';
-
-        jsonnn.writeFile('./data.json', text, (err) => {
-            if (err) {
-                console.error(err);
-                return;
-            };
-            console.log("File has been created");
-        });
-    }
-
-
-
-    function importToJSON() {
-        let id = document.getElementById("inputName");
-        let item = getItem(id);
-        let lugar = document.getElementById("inputName");
-        let json = require(lugar);
-        var obj = JSON.parse(json);
-        item = obj;
-
-    }
 
     function getName(id) {
         for (let v in machines) {
@@ -289,7 +306,6 @@ $(function () {
     function openAddToGroupModal(groupId) {
         var item = getItem(groupId);
         $("#groupId").val(groupId);
-        console.log('valeu', $('#groupId').val());
 
         $('#addToGroupTitle').html("Añadir a " + item.name);
         $("#addToGroupItems").html('');
@@ -305,9 +321,6 @@ $(function () {
         });
         $('#addToGroupSubmit').click(function () {
             var item = getItem(groupId);
-            console.log("grupos", item.elements);
-
-            console.log(maquinasQuitar, maquinasAñadir);
             Vt.unlink(url, maquinasQuitar, item.name).then(r => update(r));
             Vt.link(url, maquinasAñadir, item.name).then(r => {
                 update(r);
@@ -361,7 +374,6 @@ $(function () {
         return item;
     }
     function renderNotAddedList(machines, groups) {
-        console.log(machines, groups);
         var groupsHtml = "";
         groups.forEach(g => {
             groupsHtml += renderNotAddedItem(g, 'group');
@@ -418,7 +430,6 @@ $(function () {
                 addedMvs += renderAddedItem(getItemByName(vm));
 
                 var vmid = "#" + getItemByName(vm).id;
-                console.log(vmid);
                 $(vmid).hide();
             });
         }
@@ -436,11 +447,9 @@ $(function () {
             maquinasAñadir.splice(maquinasAñadir.indexOf(getItem(machineId).name), 1);
         }
         fillAddedItems(g);
-        console.log(g);
     }
     function delItemToGroup(machineId) {
         var idFather = $('#groupId').val();
-        console.log(machineId);
         var g = getItem(idFather);
         if (g.elements.indexOf(getItem(machineId).name) > -1) {
             g.elements.splice(g.elements.indexOf(getItem(machineId).name), 1);
@@ -473,7 +482,6 @@ $(function () {
                 $("#addMachineGroupIp").val()
             );
 
-            console.log(sampleParams);
             Vt.add(url, sampleParams).then(r => update(r));
         }
         else {
@@ -494,7 +502,6 @@ $(function () {
     }
     function showAddOrGroupType() {
         var value = $('input[name=addRadio]:checked', '#addForm').val();
-        console.log(value);
         if (value == "optionVM") {
             $("#addMachineGroupRam").parent().parent().show();
             $("#addMachineGroupHdd").parent().parent().show();
@@ -602,7 +609,6 @@ $(function () {
             undefined,
             state
         );
-        console.log(params);
         Vt.set(url, params, [item.name]).then(r => update(r));
 
     }
@@ -654,6 +660,7 @@ $(function () {
 
     $("#addForm").parsley(parsleyForBootstrap4);
     $("#editForm").parsley(parsleyForBootstrap4);
+    $("#importForm").parsley(parsleyForBootstrap4);
 
     // define un validador llamado newname, que se activa usando
     // un atributo data-parsley-newname="" en el campo a validar
