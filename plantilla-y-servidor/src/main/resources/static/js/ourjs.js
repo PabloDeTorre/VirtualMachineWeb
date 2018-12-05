@@ -68,8 +68,8 @@ $(function () {
                 console.log("New state: ", state);
                 try {
                     addIdParam();
-                    state.vms.sort(sortByName);
-                    state.groups.sort(sortByName);
+                    state.vms = state.vms.sort(sortByName);
+                    state.groups = state.groups.sort(sortByName);
                     prepareMachines(state.vms);
                     prepareGroups(state.groups);
                     addListeners();
@@ -135,11 +135,11 @@ $(function () {
         $(".export").click(function () {
             prepareExport();
         })
-        $("#exportButton").click(function() {
+        $("#exportButton").click(function () {
             var name = $("#exportName").val();
-            download(name+".json", JSON.stringify(getItemByName(name)));
+            download(name + ".json", JSON.stringify(getItemByName(name)));
             Vt.vtexport(url, name).then(r => update(r));
-            
+
         })
     }
 
@@ -159,14 +159,14 @@ $(function () {
         var element = document.createElement('a');
         element.setAttribute('href', 'data:json;charset=utf-8,' + encodeURIComponent(text));
         element.setAttribute('download', filename);
-      
+
         element.style.display = 'none';
         document.body.appendChild(element);
-      
+
         element.click();
-      
+
         document.body.removeChild(element);
-      }
+    }
     function prepareMachines(machines) {
         $("#machines").html("");
         machines.forEach(v => {
@@ -326,11 +326,11 @@ $(function () {
             var item = getItem(groupId);
             console.log(item, maquinasQuitar, maquinasAñadir);
             Vt.link(url, maquinasAñadir, item.name).then(r => update(r));
-            if(maquinasQuitar.length > 0){
-               Vt.unlink(url, maquinasQuitar, item.name).then(r => update(r)); 
+            if (maquinasQuitar.length > 0) {
+                Vt.unlink(url, maquinasQuitar, item.name).then(r => update(r));
             }
-            
-            
+
+
 
             maquinasAñadir = [];
             maquinasQuitar = [];
