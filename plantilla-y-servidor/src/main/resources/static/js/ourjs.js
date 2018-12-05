@@ -39,6 +39,9 @@ $(function () {
         showAddOrGroupType();
     });
     $("#importSubmitButton").click(function () {
+        if (!$("#importForm").parsley().isValid()) {
+            return;
+        }
         var file, fr, myFile;
         myFile = document.getElementById('fileinput');
         file = myFile.files[0];
